@@ -68,7 +68,7 @@ const SaleProduct = () => {
     formData.append("color", product?.color);
     formData.append("type", product?.type);
     formData.append("description", product?.description);
-    formData.append("image", product?.image.filename);
+    formData.append("image", product?.image?.filename);
     await dispatch(saleProducts({ id, formData }));
     await dispatch(getProducts());
     // navigate("/dashboard");

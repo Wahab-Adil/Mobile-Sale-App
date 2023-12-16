@@ -10,7 +10,7 @@ const saleListSchema = new mongoose.Schema(
     saleProductsList: [
       { type: mongoose.mongoose.Schema.Types.ObjectId, ref: "sale" },
     ],
-    saleTrash: [{ type: mongoose.mongoose.Schema.Types.ObjectId, ref: "sale" }],
+    saleTrash: [],
   },
   {
     timestamps: true,

@@ -41,10 +41,22 @@ const deleteSale = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("User not authorized");
   }
-  const deleteSale = await saleModel.findOneAndDelete({ _id: req.params.id });
-  if (!deleteSale) {
-    throw new Error("Sale record Already Deleted or Does't Exist !");
+  const foundedSale = await saleModel.findById(req.params.id);
+
+  const TrashedSale = await saleListModel.findOne({ user: req.user.id });
+  if (TrashedSale) {
+    const trashedUser = await saleListModel.findOne({ user: req.user.id });
+    trashedUser.saleTrash.push(foundedSale);
+    await trashedUser.save();
+    await foundedSale.remove();
+  } else {
+    await saleListModel.create({ user: req.user.id });
+    const trashedUser = await saleListModel.findOne({ user: req.user.id });
+    trashedUser.saleTrash.push(foundedSale);
+    await trashedUser.save();
+    await foundedSale.remove();
   }
+
   await saleListModel.updateOne(
     { user: req.user.id },
     { $pullAll: { saleProductsList: [{ _id: req.params.id }] } },

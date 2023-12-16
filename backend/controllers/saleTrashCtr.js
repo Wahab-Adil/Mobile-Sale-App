@@ -1,19 +1,19 @@
 const asyncHandler = require("express-async-handler");
-const trashModel = require("../models/ProductTrashModel");
+const saleListModel = require("../models/saleListModel");
 
 // Create Prouct
 const getTrashList = asyncHandler(async (req, res) => {
-  const trashList = await trashModel
+  console.log("console added");
+  const saleList = await saleListModel
     .findOne({ user: req.user.id })
-    .populate("productTrash")
     .sort("-createdAt");
-  res.status(200).json(trashList);
+  res.status(200).json(saleList);
 });
 
 // Get single product
 const getSingleTrashItem = asyncHandler(async (req, res) => {
-  const trashList = await trashModel.findOne({ user: req.user.id });
-  const trashItem = trashList.productTrash.filter((trashItem) => {
+  const trashList = await saleListModel.findOne({ user: req.user.id });
+  const trashItem = trashList?.saleTrash?.filter((trashItem) => {
     return trashItem._id.toString() === req.params.id;
   });
   // if product doesnt exist
@@ -31,20 +31,20 @@ const getSingleTrashItem = asyncHandler(async (req, res) => {
 
 // Empty Trash
 const EmptyTrash = asyncHandler(async (req, res) => {
-  const trashList = await trashModel.findOne({ user: req.user.id });
+  const saleLIst = await saleListModel.findOne({ user: req.user.id });
   // if product doesnt exist
-  if (!trashList) {
+  if (!saleLIst) {
     res.status(404);
     throw new Error("trash not found");
   }
   // Match product to its user
-  if (trashList.user.toString() !== req.user.id) {
+  if (saleLIst.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("User not authorized");
   }
-  const fill = await trashModel.findOneAndUpdate(
+  const fill = await saleListModel.findOneAndUpdate(
     { user: req.user.id },
-    { $set: { productTrash: [] } }
+    { $set: { saleTrash: [] } }
   );
 
   res.status(200).json({ message: "Trash Empty !" });
@@ -52,24 +52,25 @@ const EmptyTrash = asyncHandler(async (req, res) => {
 
 // Delete Product
 const deleteTrashItem = asyncHandler(async (req, res) => {
-  const trashList = await trashModel.findOne({ user: req.user.id });
-  const trashItem = trashList.productTrash.filter((trashItem) => {
+  const saleList = await saleListModel.findOne({ user: req.user.id });
+  const trashItem = saleList.saleTrash.filter((trashItem) => {
     return trashItem._id.toString() !== req.params.id;
   });
+  console.log("exact", trashItem);
   // if product doesnt exist
-  if (!trashList) {
+  if (!saleList) {
     res.status(404);
     throw new Error("Trash not found");
   }
   // Match product to its user
-  if (trashList.user.toString() !== req.user.id) {
+  if (saleList.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("User not authorized");
   }
 
-  await trashModel.findOneAndUpdate(
+  await saleListModel.findOneAndUpdate(
     { user: req.user.id },
-    { $set: { productTrash: trashItem } },
+    { $set: { saleTrash: trashItem } },
     { safe: true }
   );
 
