@@ -81,7 +81,7 @@ const deleteTrashItem = asyncHandler(async (req, res) => {
 });
 
 // Delete Product
-const deleteTrashItem = asyncHandler(async (req, res) => {
+const deleteTrashItemWithBelongedSales = asyncHandler(async (req, res) => {
   const { isAllSaleDelete } = req.body;
   if (isAllSaleDelete) {
     console.log("status", isAllSaleDelete);
