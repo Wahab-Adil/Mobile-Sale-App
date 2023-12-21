@@ -11,7 +11,6 @@ const productTrashRoute = require("./routes/productTrashRoute");
 const saleTrashRoute = require("./routes/saleTrashRoute");
 const errorHandler = require("./middleWare/errorMiddleware");
 const cookieParser = require("cookie-parser");
-const path = require("path");
 
 const app = express();
 

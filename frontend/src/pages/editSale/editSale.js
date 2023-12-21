@@ -52,7 +52,6 @@ const EditSale = () => {
     }
   };
 
-  console.log("sale product", product);
   const editSaleFun = async (e) => {
     e.preventDefault();
     const formData = {

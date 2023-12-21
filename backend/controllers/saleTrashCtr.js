@@ -1,9 +1,10 @@
 const asyncHandler = require("express-async-handler");
 const saleListModel = require("../models/saleListModel");
+const saleModel = require("../models/saleModel");
+const ProductModel = require("../models/productModel");
 
 // Create Prouct
 const getTrashList = asyncHandler(async (req, res) => {
-  console.log("console added");
   const saleList = await saleListModel
     .findOne({ user: req.user.id })
     .sort("-createdAt");
@@ -42,7 +43,7 @@ const EmptyTrash = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("User not authorized");
   }
-  const fill = await saleListModel.findOneAndUpdate(
+  await saleListModel.findOneAndUpdate(
     { user: req.user.id },
     { $set: { saleTrash: [] } }
   );
@@ -56,7 +57,6 @@ const deleteTrashItem = asyncHandler(async (req, res) => {
   const trashItem = saleList.saleTrash.filter((trashItem) => {
     return trashItem._id.toString() !== req.params.id;
   });
-  console.log("exact", trashItem);
   // if product doesnt exist
   if (!saleList) {
     res.status(404);
@@ -67,7 +67,23 @@ const deleteTrashItem = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("User not authorized");
   }
+  const trashItemFound = saleList.saleTrash.find((trashItem) => {
+    return trashItem._id.toString() == req.params.id;
+  });
 
+  const ProductFound = await ProductModel.findById({
+    _id: trashItemFound.purchaseId,
+  });
+
+  await ProductModel.findByIdAndUpdate(
+    { _id: trashItemFound.purchaseId },
+    {
+      quantity: ProductFound.quantity + trashItemFound.quantity,
+    },
+    {
+      new: true,
+    }
+  );
   await saleListModel.findOneAndUpdate(
     { user: req.user.id },
     { $set: { saleTrash: trashItem } },

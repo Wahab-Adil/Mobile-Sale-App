@@ -24,6 +24,11 @@ import SaleProduct from "./pages/sale/SaleProduct";
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/profile/EditProfile";
 import Contact from "./pages/contact/Contact";
+// trash
+import SaleStackTrash from "./pages/saleStackTrash/saleStackTrash";
+import AvaliableStackTrash from "./pages/avaliableStackTrash.js/avaliableStackTrash";
+import AvlStackTrashDetail from "./components/avaliableStackTrash/productDetail/ProductDetail";
+import SaleStackTrashDetail from "./components/saleStackTrash/productDetail/ProductDetail";
 
 axios.defaults.withCredentials = true;
 
@@ -47,7 +52,6 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/resetpassword/:resetToken" element={<Reset />} />
-
         <Route
           path="/avaliable"
           element={
@@ -118,7 +122,6 @@ function App() {
             </Sidebar>
           }
         />
-
         <Route
           path="/sale-product/:id"
           element={
@@ -159,6 +162,48 @@ function App() {
             </Sidebar>
           }
         />
+        {/* Trash */}
+        <Route
+          path="/avaliable-trash"
+          element={
+            <Sidebar>
+              <Layout>
+                <AvaliableStackTrash />
+              </Layout>
+            </Sidebar>
+          }
+        />{" "}
+        <Route
+          path="/detail-trash-item/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <AvlStackTrashDetail />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/sale-trash"
+          element={
+            <Sidebar>
+              <Layout>
+                <SaleStackTrash />
+              </Layout>
+            </Sidebar>
+          }
+        />{" "}
+        <Route
+          path="/saletrash-item/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <SaleStackTrashDetail />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        {/* Trash */}
       </Routes>
     </BrowserRouter>
   );

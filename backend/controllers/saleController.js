@@ -14,18 +14,21 @@ const getSaleList = asyncHandler(async (req, res) => {
 
 // Get single product
 const getSingleSale = asyncHandler(async (req, res) => {
+  let result;
   const FoundedSale = await saleModel.findById(req.params.id);
   // if product doesnt exist
   if (!FoundedSale) {
-    res.status(404);
-    throw new Error("Sale not found");
+    const trashList = await trashModel.findOne({ user: req.user.id });
+    result = trashList.productTrash.filter((trashItem) => {
+      return trashItem._id.toString() !== req.params.id;
+    });
   }
   // Match product to its user
   if (FoundedSale.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("User not authorized");
   }
-  res.status(200).json(FoundedSale);
+  res.status(200).json(result ? result : FoundedSale);
 });
 
 // Delete Product

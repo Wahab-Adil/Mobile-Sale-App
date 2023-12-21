@@ -18,7 +18,6 @@ import {
   getProducts,
 } from "../../../redux/features/product/productSlice";
 import { Link } from "react-router-dom";
-
 const productIcon = <BsCart2 size={30} color="blue" />;
 
 const ProductList = ({ products, isLoading }) => {

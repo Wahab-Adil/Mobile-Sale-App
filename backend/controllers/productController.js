@@ -90,6 +90,8 @@ const getProduct = asyncHandler(async (req, res) => {
 
 // Delete Product
 const deleteProduct = asyncHandler(async (req, res) => {
+  console.log("CLicked");
+
   const product = await Product.findById(req.params.id);
   // if product doesnt exist
   if (!product) {
@@ -188,7 +190,6 @@ const updateProduct = asyncHandler(async (req, res) => {
 
 const saleProduct = asyncHandler(async (req, res) => {
   const {
-    _id,
     name,
     sku,
     category,
@@ -203,69 +204,113 @@ const saleProduct = asyncHandler(async (req, res) => {
   } = req.body;
   const { id } = req.params;
 
+  const trashList = await saleListModel.findOne({ user: req.user.id });
+  const saleTrashtemFound = await trashList.saleTrash.find((item) => {
+    return item._id.toString() === req.params.id;
+  });
+
   const product = await Product.findById(id);
 
-  // if product doesnt exist
-  if (!product) {
+  // if product doesnt exsaleTrashist
+  if (!product && !saleTrashtemFound) {
     res.status(404);
-    throw new Error("Product not found");
-  }
-  // Match product to its user
-  if (product.user.toString() !== req.user.id) {
-    res.status(401);
-    throw new Error("User not authorized");
-  }
-  if (product.quantity <= 0) {
-    res.status(404);
-    throw new Error("Product does not avaliable");
-  }
-  if (quantity > product.quantity) {
-    res.status(404);
-    throw new Error(`avaliable stock ${product.quantity}`);
-  }
-  if (unitPrice <= 0) {
-    res.status(404);
-    throw new Error("price cant be negitive");
+    throw new Error("Sale not found");
   }
 
-  // Update Product
-  const updatedProduct = await Product.findByIdAndUpdate(
-    { _id: id },
-    {
-      quantity: product.quantity - quantity,
-    },
-    {
-      new: true,
+  if (saleTrashtemFound) {
+    const createdSale = await saleModel.create({
+      user: req.user.id,
+      purchaseId: saleTrashtemFound.purchaseId,
+      name,
+      sku,
+      category,
+      purchasePrice,
+      color,
+      type,
+      description,
+      quantity,
+      unitPrice,
+      totalPrice,
+      image: image,
+    });
+    const foundedSaleList = await saleListModel.findOne({ user: req.user.id });
+    if (!foundedSaleList) {
+      await saleListModel.create({ user: req.user.id });
+      const foundedSale = await saleListModel.findOne({ user: req.user.id });
+      foundedSale.saleProductsList.push(createdSale);
+      await foundedSale.save();
     }
-  );
+    foundedSaleList.saleProductsList.push(createdSale);
+    await foundedSaleList.save();
+    const trashItem = await saleListModel.findOne({ user: req.user.id });
+    const saleTrashFound = await trashItem.saleTrash.filter((item) => {
+      return item._id.toString() !== req.params.id;
+    });
+    await saleListModel.findOneAndUpdate(
+      { user: req.user.id },
+      { $set: { saleTrash: saleTrashFound } },
+      { safe: true }
+    );
+  } else {
+    // Match product to its user
+    if (product?.user?.toString() !== req.user.id) {
+      res.status(401);
+      throw new Error("User not authorized");
+    }
+    if (product?.quantity <= 0) {
+      res.status(404);
+      throw new Error("Product does not avaliable");
+    }
+    if (quantity > product?.quantity) {
+      res.status(404);
+      throw new Error(`avaliable stock ${product?.quantity}`);
+    }
+    if (unitPrice <= 0) {
+      res.status(404);
+      throw new Error("price cant be negitive");
+    }
+    // Update Product
 
-  // let save sale model
-  const createdSale = await saleModel.create({
-    user: req.user.id,
-    purchaseId: updatedProduct._id,
-    name,
-    sku,
-    category,
-    quantity,
-    unitPrice,
-    totalPrice,
-    purchasePrice,
-    color,
-    type,
-    description,
-    image: image,
-  });
-  const foundedSaleList = await saleListModel.findOne({ user: req.user.id });
-  if (!foundedSaleList) {
-    await saleListModel.create({ user: req.user.id });
-    const foundedSale = await saleListModel.findOne({ user: req.user.id });
-    foundedSale.saleProductsList.push(createdSale);
-    await foundedSale.save();
+    const updatedProduct = await Product.findByIdAndUpdate(
+      { _id: id },
+      {
+        quantity: product.quantity - quantity,
+      },
+      {
+        new: true,
+      }
+    );
+
+    // let save sale model
+    const createdSale = await saleModel.create({
+      user: req.user.id,
+      purchaseId: updatedProduct._id,
+      name,
+      sku,
+      category,
+      quantity,
+      unitPrice,
+      totalPrice,
+      purchasePrice,
+      color,
+      type,
+      description,
+      image: image,
+    });
+    const foundedSaleList = await saleListModel.findOne({ user: req.user.id });
+    if (!foundedSaleList) {
+      await saleListModel.create({ user: req.user.id });
+      const foundedSale = await saleListModel.findOne({ user: req.user.id });
+      foundedSale.saleProductsList.push(createdSale);
+      await foundedSale.save();
+    }
+    foundedSaleList.saleProductsList.push(createdSale);
+    await foundedSaleList.save();
   }
-  foundedSaleList.saleProductsList.push(createdSale);
-  await foundedSaleList.save();
 
-  res.status(200).json(updatedProduct);
+  //
+
+  res.status(200).json("Operation Successfull");
 });
 
 module.exports = {

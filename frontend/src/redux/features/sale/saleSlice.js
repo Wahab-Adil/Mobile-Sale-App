@@ -24,7 +24,6 @@ export const AllSales = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -38,7 +37,6 @@ export const getSale = createAsyncThunk("sale/get", async (id, thunkAPI) => {
       (error.response && error.response.data && error.response.data.message) ||
       error.message ||
       error.toString();
-    console.log(message);
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -48,7 +46,6 @@ export const updateSale = createAsyncThunk(
   "sale/update",
   async ({ id, formData }, thunkAPI) => {
     try {
-      console.log("formData", formData);
       return await saleService.updateSale(id, formData);
     } catch (error) {
       const message =
@@ -57,7 +54,6 @@ export const updateSale = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -76,7 +72,6 @@ export const deleteSale = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      console.log(message);
       return thunkAPI.rejectWithValue(message);
     }
   }

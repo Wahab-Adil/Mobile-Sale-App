@@ -1,25 +1,46 @@
-import { FaTh, FaRegChartBar, FaCommentAlt, FaCartPlus } from "react-icons/fa";
+import {
+  FcOrganization,
+  FcConferenceCall,
+  FcEmptyTrash,
+  FcAddDatabase,
+  FcBusinessman,
+  FcAssistant,
+} from "react-icons/fc";
 import { BiImageAdd } from "react-icons/bi";
 
 const menu = [
   {
     title: "Avaliable Stack",
-    icon: <FaTh />,
+    icon: <FcOrganization />,
     path: "/avaliable",
   },
   {
     title: "Sale Stack",
-    icon: <FaCartPlus />,
+    icon: <FcConferenceCall />,
     path: "/sale",
   },
   {
     title: "Add Product",
-    icon: <BiImageAdd />,
+    icon: <FcAddDatabase />,
     path: "/add-product",
   },
   {
+    title: "Trash",
+    icon: <FcEmptyTrash />,
+    childrens: [
+      {
+        title: "Avaliable Stack",
+        path: "/avaliable-trash",
+      },
+      {
+        title: "Sale Stack",
+        path: "/sale-trash",
+      },
+    ],
+  },
+  {
     title: "Account",
-    icon: <FaRegChartBar />,
+    icon: <FcBusinessman />,
     childrens: [
       {
         title: "Profile",
@@ -33,7 +54,7 @@ const menu = [
   },
   {
     title: "Report Bug",
-    icon: <FaCommentAlt />,
+    icon: <FcAssistant />,
     path: "/contact-us",
   },
 ];

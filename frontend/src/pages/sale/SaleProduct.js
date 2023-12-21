@@ -52,7 +52,6 @@ const SaleProduct = () => {
     }
   };
 
-  console.log("sale product", product);
   const saleProduct = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -71,7 +70,7 @@ const SaleProduct = () => {
     formData.append("image", product?.image?.filename);
     await dispatch(saleProducts({ id, formData }));
     await dispatch(getProducts());
-    // navigate("/dashboard");
+    navigate("/avaliable");
   };
 
   return (

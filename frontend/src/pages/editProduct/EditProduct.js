@@ -81,7 +81,6 @@ const EditProduct = () => {
     await dispatch(getProducts());
     navigate("/avaliable");
   };
-  console.log(productImage);
 
   return (
     <div>

@@ -9,22 +9,9 @@ const {
   EmptyTrash,
 } = require("../controllers/productTrashCtr");
 
+router.get("/empty", protect, EmptyTrash);
 router.get("/", protect, getTrashList);
 router.get("/:id", protect, getSingleTrashItem);
 router.delete("/:id", protect, deleteTrashItem);
-router.put("/empty", protect, EmptyTrash);
-
-// sale Trash routes
-const {
-  getTrashList: saleTrashList,
-  getSingleTrashItem: singleSaleTrash,
-  deleteTrashItem: deleteSaleTrashItem,
-  EmptyTrash: EmptySaleTrash,
-} = require("../controllers/saleTrashCtr");
-
-router.get("/sale/", protect, saleTrashList);
-router.get("/sale/:id", protect, singleSaleTrash);
-router.delete("/sale/:id", protect, deleteSaleTrashItem);
-router.put("/sale/empty", protect, EmptySaleTrash);
 
 module.exports = router;

@@ -42,7 +42,7 @@ const EmptyTrash = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("User not authorized");
   }
-  const fill = await trashModel.findOneAndUpdate(
+  await trashModel.findOneAndUpdate(
     { user: req.user.id },
     { $set: { productTrash: [] } }
   );
@@ -52,6 +52,40 @@ const EmptyTrash = asyncHandler(async (req, res) => {
 
 // Delete Product
 const deleteTrashItem = asyncHandler(async (req, res) => {
+  const { isAllSaleDelete } = req.body;
+  if (isAllSaleDelete) {
+    console.log("status", isAllSaleDelete);
+  }
+  const trashList = await trashModel.findOne({ user: req.user.id });
+  const trashItem = trashList.productTrash.filter((trashItem) => {
+    return trashItem._id.toString() !== req.params.id;
+  });
+  // if product doesnt exist
+  if (!trashList) {
+    res.status(404);
+    throw new Error("Trash not found");
+  }
+  // Match product to its user
+  if (trashList.user.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error("User not authorized");
+  }
+
+  await trashModel.findOneAndUpdate(
+    { user: req.user.id },
+    { $set: { productTrash: trashItem } },
+    { safe: true }
+  );
+
+  res.status(200).json({ message: "Successfully Deleted" });
+});
+
+// Delete Product
+const deleteTrashItem = asyncHandler(async (req, res) => {
+  const { isAllSaleDelete } = req.body;
+  if (isAllSaleDelete) {
+    console.log("status", isAllSaleDelete);
+  }
   const trashList = await trashModel.findOne({ user: req.user.id });
   const trashItem = trashList.productTrash.filter((trashItem) => {
     return trashItem._id.toString() !== req.params.id;
