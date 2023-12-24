@@ -18,7 +18,7 @@ const initialState = {
   type: "",
 };
 
-const AddProduct = () => {
+const AddLoan = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [product, setProduct] = useState(initialState);
@@ -95,4 +95,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default AddLoan;

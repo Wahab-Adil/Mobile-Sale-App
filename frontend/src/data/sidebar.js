@@ -5,8 +5,8 @@ import {
   FcAddDatabase,
   FcBusinessman,
   FcAssistant,
+  FcMoneyTransfer,
 } from "react-icons/fc";
-import { BiImageAdd } from "react-icons/bi";
 
 const menu = [
   {
@@ -35,6 +35,20 @@ const menu = [
       {
         title: "Sale Stack",
         path: "/sale-trash",
+      },
+    ],
+  },
+  {
+    title: "Expense & Loan",
+    icon: <FcMoneyTransfer />,
+    childrens: [
+      {
+        title: "Expense",
+        path: "/expense",
+      },
+      {
+        title: "Loan",
+        path: "/loan",
       },
     ],
   },

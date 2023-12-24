@@ -28,11 +28,18 @@ const deleteTrashItem = async (id) => {
   return response.data;
 };
 
+// Delete a Avaliable Tash item
+const deleteTrashItemWithBelongedSales = async (id) => {
+  const response = await axios.delete(`${API_URL}/withsales/` + id);
+  return response.data;
+};
+
 const AvaliableStkTrashServices = {
   getTrashList,
   getSingleTrashItem,
   getEmptyTrash,
   deleteTrashItem,
+  deleteTrashItemWithBelongedSales,
 };
 
 export default AvaliableStkTrashServices;

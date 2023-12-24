@@ -1,21 +1,40 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import avaliableStackTrashService from "./avaliableStackTrashService";
+import expenseService from "./expenseService";
 import { toast } from "react-toastify";
 
 const initialState = {
-  trashItem: null,
-  trashList: [],
+  expense: null,
+  expenses: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
 };
-// Get all Sales
-export const AvaliableStackTrashList = createAsyncThunk(
-  "product/trash/all",
+
+// Create New Expense
+export const createExpense = createAsyncThunk(
+  "expense/create",
+  async (formData, thunkAPI) => {
+    try {
+      return await expenseService.createExpense(formData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Get all Expenses
+export const AllExpenses = createAsyncThunk(
+  "expense/getAll",
   async (_, thunkAPI) => {
     try {
-      return await avaliableStackTrashService.getTrashList();
+      return await expenseService.getAllExpenses();
     } catch (error) {
       const message =
         (error.response &&
@@ -27,12 +46,13 @@ export const AvaliableStackTrashList = createAsyncThunk(
     }
   }
 );
-// Get Single Sale
-export const getSingleTrashItemFun = createAsyncThunk(
-  "product/get/trashItem",
+
+// Delete an Expense
+export const deleteExpense = createAsyncThunk(
+  "expense/delete",
   async (id, thunkAPI) => {
     try {
-      return await avaliableStackTrashService.getSingleTrashItem(id);
+      return await expenseService.deleteExpense(id);
     } catch (error) {
       const message =
         (error.response &&
@@ -45,30 +65,12 @@ export const getSingleTrashItemFun = createAsyncThunk(
   }
 );
 
-// Update Single Sale
-export const EmptyTrashList = createAsyncThunk(
-  "product/trash/empty",
-  async (thunkAPI) => {
-    try {
-      return await avaliableStackTrashService.getEmptyTrash();
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-// Delete a Sale
-export const deleteTrashItem = createAsyncThunk(
-  "trash/item/delete",
+// Get an Expense
+export const getExpense = createAsyncThunk(
+  "expense/get",
   async (id, thunkAPI) => {
     try {
-      return await avaliableStackTrashService.deleteTrashItem(id);
+      return await expenseService.SingleExpense(id);
     } catch (error) {
       const message =
         (error.response &&
@@ -80,15 +82,13 @@ export const deleteTrashItem = createAsyncThunk(
     }
   }
 );
-
-// Delete a PRoduct With Belonged Sales
-export const DelproductWithBelongedSale = createAsyncThunk(
-  "trash/item/withsales/delete",
-  async (id, thunkAPI) => {
+// Update an Expense
+export const updateExpense = createAsyncThunk(
+  "expense/update",
+  async ({ id, formData }, thunkAPI) => {
+    console.log("id", id, formData);
     try {
-      return await avaliableStackTrashService.deleteTrashItemWithBelongedSales(
-        id
-      );
+      return await expenseService.updateExpense(id, formData);
     } catch (error) {
       const message =
         (error.response &&
@@ -101,91 +101,93 @@ export const DelproductWithBelongedSale = createAsyncThunk(
   }
 );
 
-const avlStackTrashSlice = createSlice({
-  name: "productTrash",
+const expenseSlice = createSlice({
+  name: "expense",
   initialState,
-  reducers: {},
   extraReducers: (builder) => {
     builder
 
-      // get trash list
-      .addCase(AvaliableStackTrashList.pending, (state) => {
+      // create Expense
+      .addCase(createExpense.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(AvaliableStackTrashList.fulfilled, (state, action) => {
+      .addCase(createExpense.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.trashList = action.payload;
+        state.products.push(action.payload);
+        toast.success("Expense created successfully");
       })
-      .addCase(AvaliableStackTrashList.rejected, (state, action) => {
+      .addCase(createExpense.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
 
-      // get  trash item
-      .addCase(getSingleTrashItemFun.pending, (state) => {
+      // get Expenses
+      .addCase(AllExpenses.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getSingleTrashItemFun.fulfilled, (state, action) => {
+      .addCase(AllExpenses.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.trashItem = action.payload;
-        console.log("getted trash item", state.trashItem);
+        state.expenses = action.payload.AllExpenses;
+        console.log("pro", action.payload);
       })
-      .addCase(getSingleTrashItemFun.rejected, (state, action) => {
+      .addCase(AllExpenses.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
 
-      // delete trash Item
-      .addCase(deleteTrashItem.pending, (state) => {
+      // delete Expense
+      .addCase(deleteExpense.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteTrashItem.fulfilled, (state, action) => {
+      .addCase(deleteExpense.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        toast.success("item deleted successfully");
+        toast.success("Expense deleted successfully");
       })
-      .addCase(deleteTrashItem.rejected, (state, action) => {
+      .addCase(deleteExpense.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
       })
-      // delete trash Item
-      .addCase(DelproductWithBelongedSale.pending, (state) => {
+
+      // get  Expense
+      .addCase(getExpense.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(DelproductWithBelongedSale.fulfilled, (state, action) => {
+      .addCase(getExpense.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        toast.success(action.payload);
+        state.expense = action.payload.Expense;
       })
-      .addCase(DelproductWithBelongedSale.rejected, (state, action) => {
+      .addCase(getExpense.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = action.payload;
+        state.message = action.payload.success;
         toast.error(action.payload);
       })
-      // empty trash list = []
-      .addCase(EmptyTrashList.pending, (state) => {
+
+      // update expense
+      .addCase(updateExpense.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(EmptyTrashList.fulfilled, (state, action) => {
+      .addCase(updateExpense.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        toast.success(" Trash succefully become Empty");
+        toast.success("Expense updated successfully");
       })
-      .addCase(EmptyTrashList.rejected, (state, action) => {
+      .addCase(updateExpense.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -194,6 +196,7 @@ const avlStackTrashSlice = createSlice({
   },
 });
 
-export const selectIsLoading = (state) => state.proudctTrash.isLoading;
-export const selectProudctTrashItem = (state) => state.proudctTrash.trashItem;
-export default avlStackTrashSlice.reducer;
+export const selectIsLoading = (state) => state.expense.isLoading;
+export const selectExpense = (state) => state.expense.expense;
+
+export default expenseSlice.reducer;

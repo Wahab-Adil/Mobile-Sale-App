@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const trashModel = require("../models/ProductTrashModel");
+const SaleModel = require("../models/saleModel");
 
 // Create Prouct
 const getTrashList = asyncHandler(async (req, res) => {
@@ -82,13 +83,12 @@ const deleteTrashItem = asyncHandler(async (req, res) => {
 
 // Delete Product
 const deleteTrashItemWithBelongedSales = asyncHandler(async (req, res) => {
-  const { isAllSaleDelete } = req.body;
-  if (isAllSaleDelete) {
-    console.log("status", isAllSaleDelete);
-  }
   const trashList = await trashModel.findOne({ user: req.user.id });
   const trashItem = trashList.productTrash.filter((trashItem) => {
     return trashItem._id.toString() !== req.params.id;
+  });
+  const BelongedSales = await SaleModel.deleteMany({
+    purchaseId: req.params.id,
   });
   // if product doesnt exist
   if (!trashList) {
@@ -107,11 +107,14 @@ const deleteTrashItemWithBelongedSales = asyncHandler(async (req, res) => {
     { safe: true }
   );
 
-  res.status(200).json({ message: "Successfully Deleted" });
+  res.status(200).json({
+    message: `Product with${BelongedSales.deletedCount} Belonged Sales Deleted`,
+  });
 });
 module.exports = {
   getSingleTrashItem,
   getTrashList,
   EmptyTrash,
   deleteTrashItem,
+  deleteTrashItemWithBelongedSales,
 };

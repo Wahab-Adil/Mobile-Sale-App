@@ -7,11 +7,13 @@ const {
   getSingleTrashItem,
   deleteTrashItem,
   EmptyTrash,
+  deleteTrashItemWithBelongedSales,
 } = require("../controllers/productTrashCtr");
 
 router.get("/empty", protect, EmptyTrash);
 router.get("/", protect, getTrashList);
 router.get("/:id", protect, getSingleTrashItem);
 router.delete("/:id", protect, deleteTrashItem);
+router.delete("/withsales/:id", protect, deleteTrashItemWithBelongedSales);
 
 module.exports = router;

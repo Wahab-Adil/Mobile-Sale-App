@@ -17,6 +17,7 @@ const createProduct = asyncHandler(async (req, res) => {
     type,
     purchasePrice,
     salePrice,
+    image,
   } = req.body;
   console.log("backend", req.body);
   // Validation;
@@ -38,16 +39,7 @@ const createProduct = asyncHandler(async (req, res) => {
     throw new Error("Price cant be negitive value");
   }
 
-  // Handle Image upload
-  let fileData = {};
-  if (req.file) {
-    fileData = {
-      fileName: req.file.originalname,
-      filePath: req.file.path,
-      fileType: req.file.mimetype,
-      fileSize: fileSizeFormatter(req.file.size, 2),
-    };
-  }
+  console.log("req .file", req.file, image);
   // Create Product
   const product = await Product.create({
     user: req.user.id,

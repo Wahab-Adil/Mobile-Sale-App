@@ -75,15 +75,18 @@ const deleteTrashItem = asyncHandler(async (req, res) => {
     _id: trashItemFound.purchaseId,
   });
 
-  await ProductModel.findByIdAndUpdate(
-    { _id: trashItemFound.purchaseId },
-    {
-      quantity: ProductFound.quantity + trashItemFound.quantity,
-    },
-    {
-      new: true,
-    }
-  );
+  if (ProductFound) {
+    await ProductModel.findByIdAndUpdate(
+      { _id: trashItemFound.purchaseId },
+      {
+        quantity: ProductFound.quantity + trashItemFound.quantity,
+      },
+      {
+        new: true,
+      }
+    );
+  }
+
   await saleListModel.findOneAndUpdate(
     { user: req.user.id },
     { $set: { saleTrash: trashItem } },

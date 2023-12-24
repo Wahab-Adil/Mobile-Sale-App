@@ -1,0 +1,11 @@
+POST http://localhost:5000/api/expense/create
+Content-Type: application/json
+
+{
+    "user":"6575bb814b22f64f23081528",
+"to":"Adiljan",
+ "narration":"Programmer", 
+ "paid":123, 
+ "description":"HTI asdlfkj"
+
+}

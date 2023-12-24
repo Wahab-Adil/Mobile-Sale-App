@@ -30,6 +30,18 @@ import AvaliableStackTrash from "./pages/avaliableStackTrash.js/avaliableStackTr
 import AvlStackTrashDetail from "./components/avaliableStackTrash/productDetail/ProductDetail";
 import SaleStackTrashDetail from "./components/saleStackTrash/productDetail/ProductDetail";
 
+// expense
+import Expense from "./pages/expense/expense.js";
+import AddExpense from "./pages/addExpense/addExpense.js";
+import ExpenseDetails from "./components/expense/productDetail/ProductDetail.js";
+import ExpenseEdit from "./pages/expenseEdit/expenseEdit.js";
+
+// loan
+import Loan from "./pages/loan/loan.js";
+import AddLoan from "./pages/addLoan/addLoan.js";
+import LoanDetails from "./components/loan/productDetail/ProductDetail.js";
+import LoanEdit from "./pages/loan/loan.js";
+
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -73,6 +85,26 @@ function App() {
           }
         />
         <Route
+          path="/expense"
+          element={
+            <Sidebar>
+              <Layout>
+                <Expense />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/loan"
+          element={
+            <Sidebar>
+              <Layout>
+                <Loan />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
           path="/add-product"
           element={
             <Sidebar>
@@ -83,11 +115,51 @@ function App() {
           }
         />
         <Route
+          path="/add-expense"
+          element={
+            <Sidebar>
+              <Layout>
+                <AddExpense />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/add-loan"
+          element={
+            <Sidebar>
+              <Layout>
+                <AddLoan />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
           path="/product-detail/:id"
           element={
             <Sidebar>
               <Layout>
                 <AvaliableDetails />
+              </Layout>
+            </Sidebar>
+          }
+        />{" "}
+        <Route
+          path="/expense-detail/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <ExpenseDetails />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/loan-detail/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <LoanDetails />
               </Layout>
             </Sidebar>
           }
@@ -118,6 +190,26 @@ function App() {
             <Sidebar>
               <Layout>
                 <SaleEdit />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/edit-expense/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <ExpenseEdit />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/edit-loan/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <LoanEdit />
               </Layout>
             </Sidebar>
           }

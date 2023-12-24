@@ -6,13 +6,7 @@ const API_URL = `${BACKEND_URL}/api/products/`;
 
 // Create New Product
 const createProduct = async (formData) => {
-  const response = await axios.post(API_URL, formData, {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Connection: "keep-alive",
-      Accept: "*/*",
-    },
-  });
+  const response = await axios.post(API_URL, formData);
   return response.data;
 };
 

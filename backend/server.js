@@ -1,4 +1,4 @@
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -9,6 +9,8 @@ const contactRoute = require("./routes/contactRoute");
 const saleRoute = require("./routes/saleRoute");
 const productTrashRoute = require("./routes/productTrashRoute");
 const saleTrashRoute = require("./routes/saleTrashRoute");
+const expenseRoute = require("./routes/ExpenseRoute");
+const loanRoute = require("./routes/loanRoute");
 const errorHandler = require("./middleWare/errorMiddleware");
 const cookieParser = require("cookie-parser");
 
@@ -38,6 +40,8 @@ app.use("/api/contactus", contactRoute);
 app.use("/api/sale", saleRoute);
 app.use("/api/trash", productTrashRoute);
 app.use("/api/saletrash", saleTrashRoute);
+app.use("/api/expense", expenseRoute);
+app.use("/api/loan", loanRoute);
 
 // Routes
 app.get("/", (req, res) => {
