@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../components/loader/Loader";
-import SaleForm from "../../components/saleStack/saleForm/SaleForm";
+import ExpenseForm from "../../components/expense/saleForm/SaleForm";
 import {
-  getSale,
-  AllSales,
-  updateSale,
+  getLoan,
+  getAllLoans,
+  updateLoan,
   selectIsLoading,
-  selectSale,
-} from "../../redux/features/sale/saleSlice";
+  selectLoan,
+} from "../../redux/features/loan/loanSlice";
 
 const LoanEdit = () => {
   const { id } = useParams();
@@ -17,71 +17,58 @@ const LoanEdit = () => {
   const navigate = useNavigate();
   const isLoading = useSelector(selectIsLoading);
 
-  const productEdit = useSelector(selectSale);
+  const loanEdit = useSelector(selectLoan);
 
-  const [product, setProduct] = useState(productEdit);
-  const [productImage, setProductImage] = useState("");
-  const [imagePreview, setImagePreview] = useState(null);
+  const [loan, setLoan] = useState(loanEdit);
   const [description, setDescription] = useState("");
-  const [productQuantity, setProductQuantity] = useState();
-  const [productPrice, setProductPrice] = useState();
 
   useEffect(() => {
-    dispatch(getSale(id));
+    dispatch(getLoan(id));
   }, [dispatch, id]);
 
   useEffect(() => {
-    setProduct(productEdit);
-
-    setImagePreview(
-      productEdit && productEdit.image
-        ? `http://localhost:5000/${productEdit.image}`
-        : null
-    );
+    setLoan(loanEdit);
 
     setDescription(
-      productEdit && productEdit.description ? productEdit.description : ""
+      loanEdit && loanEdit.description ? loanEdit.description : ""
     );
-  }, [productEdit]);
+  }, [loanEdit]);
 
   const handleInputChange = (e) => {
-    if (e.target.name === "quantity") {
-      setProductQuantity(e.target.value);
-    } else {
-      setProductPrice(e.target.value);
-    }
+    console.log(e.target);
+    const { name, value } = e.target;
+    setLoan({ ...loan, [name]: value });
   };
 
-  const editSaleFun = async (e) => {
+  const editloanFun = async (e) => {
+    console.log("called");
     e.preventDefault();
     const formData = {
-      quantity: Number(productQuantity),
-      unitPrice: productPrice,
-      totalPrice: Number(productQuantity) * productPrice,
+      to: loan?.to,
+      narration: loan?.narration,
+      paid: loan?.paid,
+      recieved: loan?.recieved,
+      date: loan?.date,
+      description: description,
     };
-    const res = await dispatch(updateSale({ id, formData }));
-    await dispatch(AllSales());
+    const res = await dispatch(updateLoan({ id, formData }));
+    await dispatch(getAllLoans());
     if (res.status === "200") {
       navigate("/sale");
     }
   };
+  console.log("loan");
 
   return (
     <div>
       {isLoading && <Loader />}
-      <h3 className="--mt">Edit Sale</h3>
-      <SaleForm
-        product={product}
-        setProductQuantity={setProductQuantity}
-        setProductPrice={setProductPrice}
-        productPrice={productPrice}
-        productQuantity={productQuantity}
-        productImage={productImage}
-        imagePreview={imagePreview}
+      <h3 className="--mt">Edit Loan</h3>
+      <ExpenseForm
+        product={loan}
         description={description}
         setDescription={setDescription}
         handleInputChange={handleInputChange}
-        editSaleFun={editSaleFun}
+        editExpenseFun={editloanFun}
       />
     </div>
   );

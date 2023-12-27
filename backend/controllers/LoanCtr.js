@@ -27,10 +27,6 @@ const createLoan = asyncHandler(async (req, res) => {
 // All Expenses
 const AllLoans = asyncHandler(async (req, res) => {
   const AllLoans = await LoanModel.find();
-  if (AllLoans.length === 0) {
-    res.status(401);
-    throw new Error("Expense List is Empty !");
-  }
 
   res.status(201).json({ success: true, AllLoans });
 });
@@ -55,13 +51,15 @@ const SingleLoan = asyncHandler(async (req, res) => {
 const UpdateLoan = asyncHandler(async (req, res) => {
   const { to, narration, paid, recieved, description, date } = req.body;
 
+  console.log("loan called");
   // Validation;
   if (!to || !narration || !paid || !recieved || !description || !date) {
     res.status(400);
     throw new Error("Please fill in all fields");
   }
+  const loanFounded = await LoanModel.findById(req.params.id);
   // Match product to its user
-  if (Expense?.user?.toString() !== req?.user?.id) {
+  if (loanFounded?.user?.toString() !== req?.user?.id) {
     res.status(401);
     throw new Error("User not authorized");
   }

@@ -7,6 +7,8 @@ import { getExpense } from "../../../redux/features/expense/expenseSlice";
 import Card from "../../card/Card";
 import { SpinnerImg } from "../../loader/Loader";
 import "./ProductDetail.scss";
+import DOMPurify from "dompurify";
+import moment from "moment";
 
 const ProductDetail = () => {
   useRedirectLoggedOutUser("/login");
@@ -39,13 +41,7 @@ const ProductDetail = () => {
             <div className="product-details-box">
               <h4>
                 <b>Date: </b>
-                {expense?.createdAt?.toLocaleString("en-US", {
-                  timeZone: "UTC",
-                  day: "2-digit",
-                  hourCycle: "h23",
-                  year: "numeric",
-                  month: "2-digit",
-                })}
+                {moment(expense?.date).format("MMMM Do YYYY")}
               </h4>
             </div>
             <h4>
@@ -63,10 +59,18 @@ const ProductDetail = () => {
               {expense?.paid}
             </h4>
             <h4>
-              {" "}
-              <b>&rarr;Description: </b>
-              {expense?.description}
+              <b>&rarr; Details : </b> &#1547;
+              <div
+                className="product-details-info"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(expense?.description),
+                }}
+              ></div>
             </h4>
+
+            <hr />
+
+            <hr />
           </div>
         )}
       </Card>

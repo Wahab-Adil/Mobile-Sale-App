@@ -7,175 +7,63 @@ import "./SaleForm.scss";
 
 const ProductForm = ({
   product,
-  imagePreview,
-  description,
   handleInputChange,
-  saleProduct,
-  productPrice,
-  productQuantity,
+  description,
+  setDescription,
+  editExpenseFun,
 }) => {
   return (
     <div className="add-product">
-      <form onSubmit={saleProduct}>
-        <Card cardClass={"card"}>
-          <div
-            className="--my"
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
-            <button type="submit" className="--btn --btn-primary">
-              Save Product
-            </button>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <div style={{ flex: 0.8, maxWidth: "450px" }}>
-              <label>Product Quantity:</label>
-              <input
-                type="Number"
-                placeholder="Product Quantity to Sale"
-                name="quantity"
-                onChange={handleInputChange}
-              />
-            </div>
-            <div style={{ flex: 0.8, maxWidth: "450px" }}>
-              <label>Product Price:</label>
-              <input
-                type="Number"
-                placeholder="Product Price"
-                name="salePrice"
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-        </Card>
-        <Card cardClass={"card"}>
-          <div
-            className="--my"
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
-            <button type="submit" className="--btn --btn-primary">
-              Total Price ={" "}
-              {productPrice && productQuantity
-                ? productPrice * productQuantity
-                : 0}
-            </button>
-          </div>
-        </Card>
-      </form>
       <div style={{ marginBottom: "4rem" }} />
       <Card cardClass={"card"}>
-        <form>
+        <form onSubmit={editExpenseFun}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={{ flex: 0.8, maxWidth: "450px" }}>
-              <label>Product Name:</label>
+              <label> Name:</label>
               <input
                 type="text"
-                disabled
                 style={{ fontWeight: "bolder", fontSize: "1.8rem" }}
-                placeholder="Product name"
-                name="name"
-                value={product?.name}
+                placeholder="to"
+                name="to"
+                value={product?.to}
+                onChange={(e) => handleInputChange(e)}
               />
             </div>
             <div style={{ flex: 0.8, maxWidth: "450px" }}>
-              <label>Product Category:</label>
+              <label>Narration:</label>
               <input
                 type="text"
-                disabled
                 style={{ fontWeight: "bolder", fontSize: "1.8rem" }}
                 placeholder="Product Category"
-                name="category"
-                value={product?.category}
+                name="narration"
+                value={product?.narration}
+                onChange={(e) => handleInputChange(e)}
               />
             </div>
           </div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div style={{ flex: 0.8, maxWidth: "450px" }}>
-              <label>Product color:</label>
-              <input
-                type="text"
-                disabled
-                style={{ fontWeight: "bolder", fontSize: "1.8rem" }}
-                placeholder="Product color"
-                name="color"
-                value={product?.color}
-              />
-            </div>
-            <div style={{ flex: 0.8, maxWidth: "450px" }}>
-              <label>Product Type:</label>
-              <input
-                type="text"
-                disabled
-                style={{ fontWeight: "bolder", fontSize: "1.8rem" }}
-                placeholder="Product type"
-                name="type"
-                value={product?.type}
-              />
-            </div>
-          </div>
-
-          {/* new */}
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div style={{ flex: 0.8, maxWidth: "450px" }}>
-              <label>Product quantity:</label>
-              <input
-                type="text"
-                disabled
-                style={{ fontWeight: "bolder", fontSize: "1.8rem" }}
-                placeholder="Product quantity"
-                name="quantity"
-                value={product?.quantity}
-              />
-            </div>
-            <div style={{ flex: 0.8, maxWidth: "450px" }}>
-              <label>Product purchase Price:</label>
-              <input
-                type="number"
-                disabled
-                style={{ fontWeight: "bolder", fontSize: "1.8rem" }}
-                placeholder="purchase Price"
-                name="purchasePrice"
-                value={product?.purchasePrice}
-              />
-            </div>
-          </div>
-
           {/* pre */}
-          <label>Product sales Price:</label>
+          <label>Paid:</label>
           <input
-            disabled
             style={{ fontWeight: "bolder", fontSize: "1.8rem" }}
             type="number"
-            placeholder="sales Price"
-            name="salePrice"
-            value={product?.salePrice}
+            placeholder="Paid"
+            name="paid"
+            value={product?.paid}
+            onChange={(e) => handleInputChange(e)}
           />
           <label>Product Description:</label>
+          asdf
           <ReactQuill
-            readOnly
             theme="snow"
+            onChange={setDescription}
             value={description}
             modules={ProductForm.modules}
             formats={ProductForm.formats}
           />
+          <button type="submit" color="--primary">
+            Ok
+          </button>
         </form>
-        {imagePreview != null ? (
-          <div className="image-preview">
-            <img src={imagePreview} alt="product" />
-          </div>
-        ) : (
-          <p>No image set for this poduct.</p>
-        )}
       </Card>
     </div>
   );

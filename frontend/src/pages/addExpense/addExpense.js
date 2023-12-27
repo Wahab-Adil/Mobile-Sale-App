@@ -7,12 +7,14 @@ import {
   createExpense,
   selectIsLoading,
 } from "../../redux/features/expense/expenseSlice";
+import moment from "moment";
 
 const initialState = {
   to: "",
   narration: "",
   paid: "",
   description: "",
+  date: null,
 };
 
 const AddExpense = () => {
@@ -23,7 +25,7 @@ const AddExpense = () => {
 
   const isLoading = useSelector(selectIsLoading);
 
-  const { to, narration, paid } = expense;
+  const { to, narration, paid, date } = expense;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,11 +39,12 @@ const AddExpense = () => {
       narration,
       paid,
       description,
+      date,
     };
 
     await dispatch(createExpense(data));
 
-    navigate("/avaliable");
+    // navigate("/avaliable");
   };
   console.log("product", expense);
 

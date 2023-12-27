@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { SpinnerImg } from "../../loader/Loader";
 import "./productList.scss";
-import { FaEdit, FaTrashAlt, FaStore } from "react-icons/fa";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { BsCart2 } from "react-icons/bs";
 import { AiOutlineEye } from "react-icons/ai";
 import Search from "../../search/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
   FILTER_PRODUCTS,
-  selectFilteredPoducts,
-} from "../../../redux/features/product/filterSlice";
+  selectFilteredExpense,
+} from "../../../redux/features/expense/filterSlice";
 import ReactPaginate from "react-paginate";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import {
-  deleteProduct,
-  getProducts,
-} from "../../../redux/features/product/productSlice";
+  deleteLoan,
+  getAllLoans,
+} from "../../../redux/features/loan/loanSlice";
+import { FcAddDatabase } from "react-icons/fc";
+
 import { Link } from "react-router-dom";
 const productIcon = <BsCart2 size={30} color="blue" />;
 
 const ProductList = ({ products, isLoading }) => {
   const [search, setSearch] = useState("");
-  const filteredProducts = useSelector(selectFilteredPoducts);
+  const filteredProducts = useSelector(selectFilteredExpense);
 
   const dispatch = useDispatch();
 
@@ -35,15 +37,14 @@ const ProductList = ({ products, isLoading }) => {
   };
 
   const delProduct = async (id) => {
-    console.log(id);
-    await dispatch(deleteProduct(id));
-    await dispatch(getProducts());
+    await dispatch(deleteLoan(id));
+    await dispatch(getAllLoans());
   };
 
   const confirmDelete = (id) => {
     confirmAlert({
-      title: "Delete Product",
-      message: "Are you sure you want to delete this product.",
+      title: "Delete Loan",
+      message: "Are you sure you want to delete this Loan.",
       buttons: [
         {
           label: "Delete",
@@ -51,14 +52,13 @@ const ProductList = ({ products, isLoading }) => {
         },
         {
           label: "Cancel",
-          // onClick: () => alert('Click No')
         },
       ],
     });
   };
 
   //   Begin Pagination
-  const [currentItems, setCurrentItems] = useState([]);
+  const [currentItems, setCurrentItems] = useState();
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 5;
@@ -86,7 +86,12 @@ const ProductList = ({ products, isLoading }) => {
       <div className="table">
         <div className="--flex-between --flex-dir-column">
           <span>
-            <h3>Inventory Items</h3>
+            <h3>Loan List</h3>
+          </span>
+          <span title="Add">
+            <Link to={`/add-loan`}>
+              <FcAddDatabase size={40} color={"green"} />
+            </Link>
           </span>
           <span>
             <Search
@@ -106,57 +111,38 @@ const ProductList = ({ products, isLoading }) => {
               <thead>
                 <tr>
                   <th>s/n</th>
-                  <th>Name</th>
-                  <th>Category</th>
-                  <th>Purchase</th>
-                  <th>Sale</th>
-                  <th>Quantity</th>
-                  <th>Purchase Price Total</th>
-                  <th>Sale Price Total</th>
+                  <th>Customer Name</th>
+                  <th>Narration</th>
+                  <th>Paid</th>
+                  <th>Recived</th>
                   <th>Action</th>
                 </tr>
               </thead>
 
               <tbody>
-                {currentItems.map((product, index) => {
-                  const {
-                    _id,
-                    name,
-                    category,
-                    purchasePrice,
-                    salePrice,
-                    quantity,
-                  } = product;
+                {currentItems?.map((product, index) => {
+                  const { _id, to, paid, narration, recieved } = product;
                   return (
-                    <tr key={_id}>
+                    <tr style={{ border: "1px solid  black" }} key={_id}>
                       <td>{index + 1}</td>
-                      <td>{shortenText(name, 16)}</td>
-                      <td>{category}</td>
+                      <td>{shortenText(to, 16)}</td>
+                      <td>{narration}</td>
                       <td>
                         &#1547;
-                        {purchasePrice}
-                      </td>
+                        {paid}
+                      </td>{" "}
                       <td>
                         &#1547;
-                        {salePrice}
-                      </td>
-                      <td>{quantity}</td>
-                      <td>
-                        &#1547;
-                        {purchasePrice * quantity}
-                      </td>
-                      <td>
-                        &#1547;
-                        {salePrice * quantity}
-                      </td>
+                        {recieved}
+                      </td>{" "}
                       <td style={{ textAlign: "center" }} className="icons">
                         <span title="view">
-                          <Link to={`/product-detail/${_id}`}>
+                          <Link to={`/loan-detail/${_id}`}>
                             <AiOutlineEye size={25} color={"purple"} />
                           </Link>
                         </span>
                         <span title="edit">
-                          <Link to={`/edit-product/${_id}`}>
+                          <Link to={`/edit-loan/${_id}`}>
                             <FaEdit size={20} color={"green"} />
                           </Link>
                         </span>
@@ -167,9 +153,6 @@ const ProductList = ({ products, isLoading }) => {
                             color={"red"}
                             onClick={() => confirmDelete(_id)}
                           />
-                        </span>
-                        <span title="sale">
-                          <Link to={`/sale-product/${_id}`}>{productIcon}</Link>
                         </span>
                       </td>
                     </tr>

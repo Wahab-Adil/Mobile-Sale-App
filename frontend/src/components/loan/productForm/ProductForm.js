@@ -7,95 +7,53 @@ import "./ProductForm.scss";
 
 const ProductForm = ({
   product,
-  productImage,
-  imagePreview,
   description,
   setDescription,
   handleInputChange,
-  handleImageChange,
   saveProduct,
 }) => {
   return (
     <div className="add-product">
       <Card cardClass={"card"}>
-        <form onSubmit={saveProduct} encType="multipart/form-data">
-          <Card cardClass={"group"}>
-            <label>Product Image</label>
-
-            <input
-              type="file"
-              name="image"
-              onChange={(e) => handleImageChange(e)}
-            />
-
-            <div className="image-preview">
-              <img
-                src={
-                  imagePreview
-                    ? imagePreview
-                    : `http://localhost:5000/${product?.image?.filename}`
-                }
-                alt="product"
-              />
-            </div>
-          </Card>
-          <label>Product Name:</label>
+        <form onSubmit={saveProduct}>
+          <label>To:</label>
           <input
             type="text"
-            placeholder="Product name"
-            name="name"
-            value={product?.name}
+            placeholder="Name"
+            name="to"
+            value={product?.to}
             onChange={handleInputChange}
           />
-
-          <label>Product Category:</label>
+          <label>narration:</label>
           <input
             type="text"
-            placeholder="Product Category"
-            name="category"
-            value={product?.category}
+            placeholder="Narration"
+            name="narration"
+            value={product?.narration}
             onChange={handleInputChange}
           />
-
-          <label>Product Color:</label>
-          <input
-            type="text"
-            placeholder="Product color"
-            name="color"
-            value={product?.color}
-            onChange={handleInputChange}
-          />
-          <label>Product type:</label>
-          <input
-            type="text"
-            placeholder="Product type"
-            name="type"
-            value={product?.type}
-            onChange={handleInputChange}
-          />
-
-          <label>Product Quantity:</label>
-          <input
-            type="text"
-            placeholder="Product Quantity"
-            name="quantity"
-            value={product?.quantity}
-            onChange={handleInputChange}
-          />
-          <label>Product purchase Price:</label>
+          <label>Paid:</label>
           <input
             type="number"
-            placeholder="purchase Price"
-            name="purchasePrice"
-            value={product?.purchasePrice}
+            placeholder="Paid"
+            name="paid"
+            value={product?.paid}
             onChange={handleInputChange}
-          />
-          <label>Product sales Price:</label>
+          />{" "}
+          <label>Recieved:</label>
           <input
             type="number"
-            placeholder="sales Price"
-            name="salePrice"
-            value={product?.salePrice}
+            placeholder="Recived"
+            name="recieved"
+            value={product?.recieved}
+            onChange={handleInputChange}
+          />{" "}
+          <label>Date:</label>
+          <input
+            type="date"
+            placeholder="Paid"
+            name="date"
+            value={product?.date}
             onChange={handleInputChange}
           />
           <label>Product Description:</label>
@@ -106,7 +64,6 @@ const ProductForm = ({
             modules={ProductForm.modules}
             formats={ProductForm.formats}
           />
-
           <div className="--my">
             <button type="submit" className="--btn --btn-primary">
               Save Product

@@ -115,7 +115,7 @@ const expenseSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.products.push(action.payload);
+        // state.expenses.push(action.payload);
         toast.success("Expense created successfully");
       })
       .addCase(createExpense.rejected, (state, action) => {

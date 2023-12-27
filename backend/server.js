@@ -11,6 +11,7 @@ const productTrashRoute = require("./routes/productTrashRoute");
 const saleTrashRoute = require("./routes/saleTrashRoute");
 const expenseRoute = require("./routes/ExpenseRoute");
 const loanRoute = require("./routes/loanRoute");
+const reportRoute = require("./routes/reportRoute");
 const errorHandler = require("./middleWare/errorMiddleware");
 const cookieParser = require("cookie-parser");
 
@@ -42,6 +43,7 @@ app.use("/api/trash", productTrashRoute);
 app.use("/api/saletrash", saleTrashRoute);
 app.use("/api/expense", expenseRoute);
 app.use("/api/loan", loanRoute);
+app.use("/api/report", reportRoute);
 
 // Routes
 app.get("/", (req, res) => {

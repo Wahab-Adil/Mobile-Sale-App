@@ -126,7 +126,7 @@ const loanSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.allLoans = action.payload;
+        state.allLoans = action.payload.AllLoans;
       })
       .addCase(getAllLoans.rejected, (state, action) => {
         state.isLoading = false;
@@ -160,7 +160,7 @@ const loanSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
-        state.loan = action.payload;
+        state.loan = action.payload.Loan;
       })
       .addCase(getLoan.rejected, (state, action) => {
         state.isLoading = false;
@@ -189,6 +189,6 @@ const loanSlice = createSlice({
 });
 
 export const selectIsLoading = (state) => state.loan.isLoading;
-export const selectExpense = (state) => state.loan.loan;
+export const selectLoan = (state) => state.loan.loan;
 
 export default loanSlice.reducer;

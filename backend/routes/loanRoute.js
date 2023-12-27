@@ -11,8 +11,8 @@ const {
 const { upload } = require("../utils/fileUpload");
 
 router.post("/create", protect, createLoan);
-router.get("/", protect, SingleLoan);
-router.get("/:id", protect, AllLoans);
+router.get("/", protect, AllLoans);
+router.get("/:id", protect, SingleLoan);
 router.patch("/:id", protect, UpdateLoan);
 router.delete("/:id", protect, DeleteLoan);
 

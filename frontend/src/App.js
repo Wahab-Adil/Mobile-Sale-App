@@ -40,7 +40,7 @@ import ExpenseEdit from "./pages/expenseEdit/expenseEdit.js";
 import Loan from "./pages/loan/loan.js";
 import AddLoan from "./pages/addLoan/addLoan.js";
 import LoanDetails from "./components/loan/productDetail/ProductDetail.js";
-import LoanEdit from "./pages/loan/loan.js";
+import LoanEdit from "./pages/loanEdit/loanEdit.js";
 
 axios.defaults.withCredentials = true;
 

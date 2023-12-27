@@ -24,7 +24,6 @@ const ProductForm = ({
             value={product?.to}
             onChange={handleInputChange}
           />
-
           <label>narration:</label>
           <input
             type="text"
@@ -33,7 +32,6 @@ const ProductForm = ({
             value={product?.narration}
             onChange={handleInputChange}
           />
-
           <label>Paid:</label>
           <input
             type="text"
@@ -41,8 +39,15 @@ const ProductForm = ({
             name="paid"
             value={product?.paid}
             onChange={handleInputChange}
+          />{" "}
+          <label>Date:</label>
+          <input
+            type="date"
+            placeholder="Paid"
+            name="date"
+            value={product?.date}
+            onChange={handleInputChange}
           />
-
           <label>Product Description:</label>
           <ReactQuill
             theme="snow"
@@ -51,7 +56,6 @@ const ProductForm = ({
             modules={ProductForm.modules}
             formats={ProductForm.formats}
           />
-
           <div className="--my">
             <button type="submit" className="--btn --btn-primary">
               Save Product

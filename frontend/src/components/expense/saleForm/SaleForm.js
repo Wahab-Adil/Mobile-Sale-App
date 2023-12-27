@@ -50,9 +50,27 @@ const ProductForm = ({
             name="paid"
             value={product?.paid}
             onChange={(e) => handleInputChange(e)}
+          />{" "}
+          <label>Recieved:</label>
+          <input
+            style={{ fontWeight: "bolder", fontSize: "1.8rem" }}
+            type="number"
+            placeholder="Paid"
+            name="recieved"
+            value={product?.recieved}
+            onChange={(e) => handleInputChange(e)}
+          />{" "}
+          <label>Date:</label>
+          <input
+            style={{ fontWeight: "bold", fontSize: "1.8rem" }}
+            type="date"
+            placeholder="Date"
+            name="date"
+            value={product?.date}
+            onChange={(e) => handleInputChange(e)}
           />
-          <label>Product Description:</label>
-          asdf
+          <hr />
+          <label>Loan Description:</label>
           <ReactQuill
             theme="snow"
             onChange={setDescription}
