@@ -46,6 +46,7 @@ const ExpenseReport = () => {
           <form onSubmit={getReportAvalStack} encType="multipart/form-data">
             <label>From Date:</label>
             <input
+              style={{ minWidth: "100%", fontWeight: "bold", fontSize: "3rem" }}
               type="date"
               placeholder="From Date"
               name="fromDate"
@@ -55,6 +56,7 @@ const ExpenseReport = () => {
 
             <label>To Date:</label>
             <input
+              style={{ minWidth: "100%", fontWeight: "bold", fontSize: "3rem" }}
               type="date"
               placeholder="To Date"
               name="toDate"
@@ -63,7 +65,7 @@ const ExpenseReport = () => {
             />
             <div className="--my">
               <button type="submit" className="--btn --btn-primary">
-                Save Product
+                Search Result
               </button>
             </div>
           </form>
