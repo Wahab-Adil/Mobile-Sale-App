@@ -134,7 +134,6 @@ const expenseSlice = createSlice({
         state.isSuccess = true;
         state.isError = false;
         state.expenses = action.payload.AllExpenses;
-        console.log("pro", action.payload);
       })
       .addCase(AllExpenses.rejected, (state, action) => {
         state.isLoading = false;

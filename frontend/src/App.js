@@ -42,6 +42,21 @@ import AddLoan from "./pages/addLoan/addLoan.js";
 import LoanDetails from "./components/loan/productDetail/ProductDetail.js";
 import LoanEdit from "./pages/loanEdit/loanEdit.js";
 
+// report
+// purchase
+import AvaliableStackReport from "./pages/report/avaliableStack/AvaliableStack.js";
+import DateWisePurchaseReport from "./pages/report/dateWisePurchase/PurchaseReport.js";
+import OutOfStack from "./pages/report/outStack/OutStack.js";
+// sale
+import SaleProductReport from "./pages/report/sale/SaleProductReport.js";
+import MaxSold from "./pages/report/maxsale/MaxSold.js";
+import MinSold from "./pages/report/minsale/MinSales.js";
+
+// expense
+import ExpenseReport from "./pages/report/expense/expense.js";
+// loan
+import LoanReport from "./pages/report/loan/loan.js";
+
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -64,6 +79,86 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/resetpassword/:resetToken" element={<Reset />} />
+        <Route
+          path="/report/purchase"
+          element={
+            <Sidebar>
+              <Layout>
+                <DateWisePurchaseReport />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/aval/purchase"
+          element={
+            <Sidebar>
+              <Layout>
+                <AvaliableStackReport />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/out/purchase"
+          element={
+            <Sidebar>
+              <Layout>
+                <OutOfStack />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/report/sale"
+          element={
+            <Sidebar>
+              <Layout>
+                <SaleProductReport />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/max/sold"
+          element={
+            <Sidebar>
+              <Layout>
+                <MaxSold />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/min/sold"
+          element={
+            <Sidebar>
+              <Layout>
+                <MinSold />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/report/expense"
+          element={
+            <Sidebar>
+              <Layout>
+                <ExpenseReport />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/report/loan"
+          element={
+            <Sidebar>
+              <Layout>
+                <LoanReport />
+              </Layout>
+            </Sidebar>
+          }
+        />
         <Route
           path="/avaliable"
           element={

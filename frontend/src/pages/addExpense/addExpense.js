@@ -46,7 +46,6 @@ const AddExpense = () => {
 
     // navigate("/avaliable");
   };
-  console.log("product", expense);
 
   return (
     <div>

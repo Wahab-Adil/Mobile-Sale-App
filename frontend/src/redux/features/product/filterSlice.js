@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const filterSlice = createSlice({
-  name: "filter",
+  name: "filterAval",
   initialState,
   reducers: {
     FILTER_PRODUCTS(state, action) {

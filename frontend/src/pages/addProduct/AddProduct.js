@@ -75,7 +75,6 @@ const AddProduct = () => {
 
     navigate("/avaliable");
   };
-  console.log("product", product);
 
   return (
     <div>

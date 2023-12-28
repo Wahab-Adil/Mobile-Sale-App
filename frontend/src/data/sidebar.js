@@ -6,6 +6,7 @@ import {
   FcBusinessman,
   FcAssistant,
   FcMoneyTransfer,
+  FcStatistics,
 } from "react-icons/fc";
 
 const menu = [
@@ -49,6 +50,44 @@ const menu = [
       {
         title: "Loan",
         path: "/loan",
+      },
+    ],
+  },
+  {
+    title: "Report",
+    icon: <FcStatistics />,
+    childrens: [
+      {
+        title: "Purchase Report",
+        path: "/report/purchase",
+      },
+      {
+        title: "Avaliable Stack Report ",
+        path: "/aval/purchase",
+      },
+      {
+        title: "Out Stack Report ",
+        path: "/out/purchase",
+      },
+      {
+        title: "Date Wise Sale Report",
+        path: "/report/sale",
+      },
+      {
+        title: "Maximum Sold Products",
+        path: "/max/sold",
+      },
+      {
+        title: "Minimum Sold Products",
+        path: "/min/Sold",
+      },
+      {
+        title: "Expense Report",
+        path: "/report/expense",
+      },
+      {
+        title: "Loan Report",
+        path: "/report/loan",
       },
     ],
   },

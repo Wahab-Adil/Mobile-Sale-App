@@ -10,11 +10,15 @@ import avaliabeStackTrashReducer from "../redux/features/avaliableStackTrash/ava
 // expense & loan
 import expenseReducer from "../redux/features/expense/expenseSlice";
 import loanReducer from "../redux/features/loan/loanSlice";
+// report
+import reportReducer from "../redux/features/report/reportSlice";
+import reportAvlReport from "../redux/features/report/filterSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     filter: filterReducer,
+    avalfilter: reportAvlReport,
     expensefilter: ExpenseFilterReducer,
     product: productReducer,
     avaliableStkTrash: avaliabeStackTrashReducer,
@@ -23,5 +27,7 @@ export const store = configureStore({
     // expense & loan
     expense: expenseReducer,
     loan: loanReducer,
+    // report
+    report: reportReducer,
   },
 });

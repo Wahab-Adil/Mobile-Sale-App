@@ -82,7 +82,6 @@ const EditProduct = () => {
     navigate("/avaliable");
   };
 
-  console.log("proud", product);
   return (
     <div>
       {isLoading && <Loader />}
