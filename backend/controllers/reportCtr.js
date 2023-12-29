@@ -3,19 +3,20 @@ const saleModel = require("../models/saleModel");
 const productModel = require("../models/productModel");
 const expenseModel = require("../models/expenseModel");
 const loanModel = require("../models/LoanModel");
+const { default: mongoose } = require("mongoose");
 
 // Purchase Report
 const purchaseReport = asyncHandler(async (req, res) => {
   const { fromDate, toDate } = req.body;
   const purchaseDateWise = await productModel.find({
-    createdAt: {
+    updatedAt: {
       $gte: new Date(fromDate),
       $lte: new Date(toDate),
     },
   });
   const totalpurchaseCount = await productModel
     .find({
-      createdAt: {
+      updatedAt: {
         $gte: new Date(fromDate),
         $lte: new Date(toDate),
       },
@@ -24,7 +25,7 @@ const purchaseReport = asyncHandler(async (req, res) => {
   const purcahseStatustics = await productModel.aggregate([
     {
       $match: {
-        createdAt: {
+        updatedAt: {
           $gte: new Date(fromDate),
           $lte: new Date(toDate),
         },
@@ -137,8 +138,8 @@ const maximumSoldProductsReport = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("please fill all fields");
   }
-  const purcahseStatustics = await saleModel
-    .aggregate([
+  await saleModel.aggregate(
+    [
       {
         $match: {
           createdAt: {
@@ -148,14 +149,53 @@ const maximumSoldProductsReport = asyncHandler(async (req, res) => {
         },
       },
       {
+        $group: {
+          _id: "$purchaseId",
+          quantity: { $sum: "$quantity" },
+        },
+      },
+
+      {
         $sort: {
           quantity: -1,
         },
       },
-    ])
-    .limit(limit);
+      {
+        $limit: limit,
+      },
+    ],
+    async function (err, list) {
+      await productModel.populate(list, { path: "_id" }, (err, result) => {
+        console.log("res", result);
+        const ExistedProMaxSoldList = result?.filter((productResult) => {
+          return productResult._id !== null;
+        });
 
-  res.status(200).json(purcahseStatustics);
+        const maxSold = ExistedProMaxSoldList.map((res) => {
+          return {
+            _id: res._id._id,
+            name: res._id.name,
+            sku: res._id.sku,
+            category: res._id.category,
+            purchasePrice: res._id.purchasePrice,
+            salePrice: res._id.salePrice,
+            description: res._id.description,
+            image: res._id.image,
+            color: res._id.color,
+            type: res._id.type,
+            avalQuantity: res._id.quantity,
+            purchasedQuantity: res.quantity,
+          };
+        });
+
+        res.status(200).json(maxSold);
+      });
+      if (err) {
+        res.status(400);
+        throw new Error(err);
+      }
+    }
+  );
 });
 
 // top 3 min sold  Report
@@ -166,8 +206,8 @@ const minimumSoldProductsReport = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("please fill all fields");
   }
-  const purcahseStatustics = await saleModel
-    .aggregate([
+  await saleModel.aggregate(
+    [
       {
         $match: {
           createdAt: {
@@ -177,14 +217,51 @@ const minimumSoldProductsReport = asyncHandler(async (req, res) => {
         },
       },
       {
+        $group: {
+          _id: "$purchaseId",
+          quantity: { $sum: "$quantity" },
+        },
+      },
+
+      {
         $sort: {
           quantity: 1,
         },
       },
-    ])
-    .limit(limit);
+      {
+        $limit: limit,
+      },
+    ],
+    async function (err, list) {
+      await productModel.populate(list, { path: "_id" }, (err, result) => {
+        const ExistedProductMinSoldList = result?.filter((productResult) => {
+          return productResult._id !== null;
+        });
+        const minSold = ExistedProductMinSoldList.map((res) => {
+          return {
+            _id: res._id._id,
+            name: res._id.name,
+            sku: res._id.sku,
+            category: res._id.category,
+            purchasePrice: res._id.purchasePrice,
+            salePrice: res._id.salePrice,
+            description: res._id.description,
+            image: res._id.image,
+            color: res._id.color,
+            type: res._id.type,
+            avalQuantity: res._id.quantity,
+            purchasedQuantity: res.quantity,
+          };
+        });
 
-  res.status(200).json(purcahseStatustics);
+        res.status(200).json(minSold);
+      });
+      if (err) {
+        res.status(400);
+        throw new Error(err);
+      }
+    }
+  );
 });
 
 // Expense

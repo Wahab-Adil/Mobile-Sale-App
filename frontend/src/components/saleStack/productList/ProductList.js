@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { SpinnerImg } from "../../loader/Loader";
 import "./productList.scss";
 import { FaEdit, FaTrashAlt, FaStore } from "react-icons/fa";
+import { FcAddDatabase } from "react-icons/fc";
 import { BsCart2 } from "react-icons/bs";
 import { AiOutlineEye } from "react-icons/ai";
 import Search from "../../search/Search";
@@ -89,6 +90,7 @@ const ProductList = ({ products, isLoading }) => {
           <span>
             <h3>Sale Items List</h3>
           </span>
+
           <span>
             <Search
               value={search}

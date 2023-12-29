@@ -52,7 +52,6 @@ const ProductForm = ({
             onChange={(e) => handleInputChange(e)}
           />
           <label>Product Description:</label>
-          asdf
           <ReactQuill
             theme="snow"
             onChange={setDescription}

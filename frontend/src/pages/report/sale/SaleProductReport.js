@@ -42,10 +42,13 @@ const MinSoldReport = () => {
   console.log("min", salesReport);
   return (
     <div>
-      <div className="add-product">
+      <div
+        className="add-product"
+        style={{ minwidth: "100%", display: "flex", justifyContent: "center" }}
+      >
         <Card cardClass={"card"}>
           <form onSubmit={getReportAvalStack} encType="multipart/form-data">
-            <label>From Date:</label>
+            <label style={{ fontWeight: "bold" }}>From Date:</label>
             <input
               style={{ minWidth: "100%", fontWeight: "bold", fontSize: "3rem" }}
               type="date"
@@ -55,7 +58,7 @@ const MinSoldReport = () => {
               onChange={handleInputChange}
             />
 
-            <label>To Date:</label>
+            <label style={{ fontWeight: "bold" }}>To Date:</label>
             <input
               style={{ minWidth: "100%", fontWeight: "bold", fontSize: "3rem" }}
               type="date"
@@ -65,8 +68,12 @@ const MinSoldReport = () => {
               onChange={handleInputChange}
             />
             <div className="--my">
-              <button type="submit" className="--btn --btn-primary">
-                Save Product
+              <button
+                style={{ fontWeight: "bold", width: "100%" }}
+                type="submit"
+                className="--btn --btn-primary"
+              >
+                Find
               </button>
             </div>
           </form>

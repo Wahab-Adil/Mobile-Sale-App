@@ -26,7 +26,6 @@ const ProductList = ({ products, isLoading }) => {
   const [search, setSearch] = useState("");
   const filteredProducts = useSelector(selectFilteredExpense);
 
-  console.log("hello", filteredProducts);
   const dispatch = useDispatch();
 
   const shortenText = (text, n) => {
@@ -35,27 +34,6 @@ const ProductList = ({ products, isLoading }) => {
       return shortenedText;
     }
     return text;
-  };
-
-  const delProduct = async (id) => {
-    await dispatch(deleteExpense(id));
-    await dispatch(AllExpenses());
-  };
-
-  const confirmDelete = (id) => {
-    confirmAlert({
-      title: "Delete Product",
-      message: "Are you sure you want to delete this product.",
-      buttons: [
-        {
-          label: "Delete",
-          onClick: () => delProduct(id),
-        },
-        {
-          label: "Cancel",
-        },
-      ],
-    });
   };
 
   //   Begin Pagination
@@ -89,11 +67,7 @@ const ProductList = ({ products, isLoading }) => {
           <span>
             <h3>Expense List</h3>
           </span>
-          <span title="Add">
-            <Link to={`/add-expense`}>
-              <FcAddDatabase size={40} color={"green"} />
-            </Link>
-          </span>
+
           <span>
             <Search
               value={search}
@@ -141,14 +115,6 @@ const ProductList = ({ products, isLoading }) => {
                           <Link to={`/edit-expense/${_id}`}>
                             <FaEdit size={20} color={"green"} />
                           </Link>
-                        </span>
-
-                        <span title="delete">
-                          <FaTrashAlt
-                            size={20}
-                            color={"red"}
-                            onClick={() => confirmDelete(_id)}
-                          />
                         </span>
                       </td>
                     </tr>

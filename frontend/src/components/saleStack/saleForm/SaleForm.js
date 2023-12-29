@@ -63,7 +63,7 @@ const ProductForm = ({
               justifyContent: "flex-end",
             }}
           >
-            <button type="submit" className="--btn --btn-primary">
+            <button className="--btn --btn-primary">
               Total Price ={" "}
               {productPrice && productQuantity
                 ? productPrice * productQuantity

@@ -6,7 +6,26 @@ import {
   FcBusinessman,
   FcAssistant,
   FcMoneyTransfer,
-  FcStatistics,
+  FcComboChart,
+  // Trash
+  FcDataSheet,
+  FcDoughnutChart,
+  // loan & expense
+  FcBriefcase,
+
+  // report
+  FcFinePrint,
+  FcSafe,
+  FcDeleteDatabase,
+  FcCurrencyExchange,
+  FcDebt,
+  FcDonate,
+  FcBullish,
+  FcNegativeDynamic,
+  FcInTransit,
+  // profile
+  FcPicture,
+  FcPortraitMode,
 } from "react-icons/fc";
 
 const menu = [
@@ -20,20 +39,19 @@ const menu = [
     icon: <FcConferenceCall />,
     path: "/sale",
   },
-  {
-    title: "Add Product",
-    icon: <FcAddDatabase />,
-    path: "/add-product",
-  },
+
   {
     title: "Trash",
     icon: <FcEmptyTrash />,
     childrens: [
       {
+        icon: <FcDataSheet />,
         title: "Avaliable Stack",
         path: "/avaliable-trash",
       },
       {
+        icon: <FcDoughnutChart />,
+
         title: "Sale Stack",
         path: "/sale-trash",
       },
@@ -44,10 +62,12 @@ const menu = [
     icon: <FcMoneyTransfer />,
     childrens: [
       {
+        icon: <FcDonate />,
         title: "Expense",
         path: "/expense",
       },
       {
+        icon: <FcBriefcase />,
         title: "Loan",
         path: "/loan",
       },
@@ -55,40 +75,44 @@ const menu = [
   },
   {
     title: "Report",
-    icon: <FcStatistics />,
+    icon: <FcComboChart />,
     childrens: [
       {
-        title: "Purchase Report",
+        icon: <FcFinePrint />,
+        title: "Purchase",
         path: "/report/purchase",
       },
       {
-        title: "Avaliable Stack Report ",
+        icon: <FcSafe />,
+        title: "Avl-Stk ",
         path: "/aval/purchase",
       },
       {
-        title: "Out Stack Report ",
+        icon: <FcDeleteDatabase />,
+        title: "Out-Stk ",
         path: "/out/purchase",
       },
       {
-        title: "Date Wise Sale Report",
+        icon: <FcInTransit />,
+        title: "Sale",
         path: "/report/sale",
       },
       {
-        title: "Maximum Sold Products",
+        icon: <FcBullish />,
+        title: "Max-sale",
         path: "/max/sold",
       },
       {
-        title: "Minimum Sold Products",
+        icon: <FcNegativeDynamic />,
+        title: "Min-Sale",
         path: "/min/Sold",
       },
       {
-        title: "Expense Report",
+        icon: <FcCurrencyExchange />,
+        title: "Expense",
         path: "/report/expense",
       },
-      {
-        title: "Loan Report",
-        path: "/report/loan",
-      },
+      { icon: <FcDebt />, title: "Loan", path: "/report/loan" },
     ],
   },
   {
@@ -96,10 +120,14 @@ const menu = [
     icon: <FcBusinessman />,
     childrens: [
       {
+        icon: <FcPicture />,
+
         title: "Profile",
         path: "/profile",
       },
       {
+        icon: <FcPortraitMode />,
+
         title: "Edit Profile",
         path: "/edit-profile",
       },

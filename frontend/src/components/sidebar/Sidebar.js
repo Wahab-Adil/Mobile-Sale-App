@@ -17,7 +17,7 @@ const Sidebar = ({ children }) => {
 
   return (
     <div className="layout">
-      <div className="sidebar" style={{ width: isOpen ? "245px" : "60px" }}>
+      <div className="sidebar" style={{ width: isOpen ? "245px" : "100px" }}>
         <div className="top_section">
           <div className="logo" style={{ display: isOpen ? "block" : "none" }}>
             <RiProductHuntLine

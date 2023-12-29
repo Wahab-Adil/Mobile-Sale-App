@@ -8,7 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectCategory,
   selectOutOfStock,
+  CALC_CATEGORY,
+} from "../../../redux/features/product/productSlice";
+
+import {
   selectTotalStoreValue,
+  CALC_STORE_VALUE,
 } from "../../../redux/features/sale/saleSlice";
 import { CALC_OUTOFSTOCK } from "../../../redux/features/product/productSlice";
 

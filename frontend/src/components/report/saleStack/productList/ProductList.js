@@ -157,14 +157,6 @@ const ProductList = ({ products, isLoading }) => {
                             <FaEdit size={20} color={"green"} />
                           </Link>
                         </span>
-
-                        <span title="delete">
-                          <FaTrashAlt
-                            size={20}
-                            color={"red"}
-                            onClick={() => confirmDelete(_id)}
-                          />
-                        </span>
                       </td>
                     </tr>
                   );

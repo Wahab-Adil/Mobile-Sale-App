@@ -60,9 +60,7 @@ const ProductForm = ({
             modules={ProductForm.modules}
             formats={ProductForm.formats}
           />
-          <button type="submit" color="--primary">
-            Ok
-          </button>
+          <button type="submit" color="--primary"></button>
         </form>
       </Card>
     </div>

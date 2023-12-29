@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { SpinnerImg } from "../../loader/Loader";
 import "./productList.scss";
 import { FaEdit, FaTrashAlt, FaStore } from "react-icons/fa";
+import { FcAddDatabase } from "react-icons/fc";
 import { BsCart2 } from "react-icons/bs";
 import { AiOutlineEye } from "react-icons/ai";
 import Search from "../../search/Search";
@@ -86,7 +87,12 @@ const ProductList = ({ products, isLoading }) => {
       <div className="table">
         <div className="--flex-between --flex-dir-column">
           <span>
-            <h3>Inventory Items</h3>
+            <h3>Product List</h3>
+          </span>
+          <span title="Add">
+            <Link to={`/add-product`}>
+              <FcAddDatabase size={40} color={"green"} />
+            </Link>
           </span>
           <span>
             <Search

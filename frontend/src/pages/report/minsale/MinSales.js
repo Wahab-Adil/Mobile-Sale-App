@@ -42,10 +42,13 @@ const MinSoldReport = () => {
   console.log("min", minSoldPRoduct);
   return (
     <div>
-      <div className="add-product">
+      <div
+        style={{ minwidth: "100%", display: "flex", justifyContent: "center" }}
+        className="add-product"
+      >
         <Card cardClass={"card"}>
           <form onSubmit={getReportAvalStack} encType="multipart/form-data">
-            <label>From Date:</label>
+            <label style={{ fontWeight: "bold" }}>From Date:</label>
             <input
               style={{ minWidth: "100%", fontWeight: "bold", fontSize: "3rem" }}
               type="date"
@@ -55,7 +58,7 @@ const MinSoldReport = () => {
               onChange={handleInputChange}
             />
 
-            <label>To Date:</label>
+            <label style={{ fontWeight: "bold" }}>To Date:</label>
             <input
               style={{ minWidth: "100%", fontWeight: "bold", fontSize: "3rem" }}
               type="date"
@@ -64,18 +67,24 @@ const MinSoldReport = () => {
               value={report?.toDate}
               onChange={handleInputChange}
             />
-            <label>Limit:</label>
+            <label style={{ fontWeight: "bold", marginTop: "10px" }}>
+              Limit:
+            </label>
             <input
-              style={{ minWidth: "100%", fontWeight: "bold", fontSize: "3rem" }}
+              style={{ minWidth: "100%", fontWeight: "bold", fontSize: "2rem" }}
               type="number"
-              placeholder="Limit Count of Products To Show"
+              placeholder="Limit Count Number To Show"
               name="limit"
               value={report?.limit}
               onChange={handleInputChange}
             />
             <div className="--my">
-              <button type="submit" className="--btn --btn-primary">
-                Save Product
+              <button
+                style={{ margin: "auto", width: "100%", fontWeight: "bold" }}
+                type="submit"
+                className="--btn --btn-primary"
+              >
+                Find
               </button>
             </div>
           </form>

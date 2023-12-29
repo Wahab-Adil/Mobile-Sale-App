@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const saleListModel = require("../models/saleListModel");
 const saleModel = require("../models/saleModel");
+const trashModel = require("../models/ProductTrashModel");
 const Product = require("../models/productModel");
 
 // Create Prouct
@@ -23,12 +24,8 @@ const getSingleSale = asyncHandler(async (req, res) => {
       return trashItem._id.toString() !== req.params.id;
     });
   }
-  // Match product to its user
-  if (FoundedSale.user.toString() !== req.user.id) {
-    res.status(401);
-    throw new Error("User not authorized");
-  }
-  res.status(200).json(result ? result : FoundedSale);
+
+  res.status(200).json(result ? result[0] : FoundedSale);
 });
 
 // Delete Product

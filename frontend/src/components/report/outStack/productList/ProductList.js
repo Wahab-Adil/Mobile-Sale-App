@@ -34,29 +34,6 @@ const ProductList = ({ products, isLoading }) => {
     return text;
   };
 
-  const delProduct = async (id) => {
-    console.log(id);
-    await dispatch(deleteProduct(id));
-    await dispatch(getProducts());
-  };
-
-  const confirmDelete = (id) => {
-    confirmAlert({
-      title: "Delete Product",
-      message: "Are you sure you want to delete this product.",
-      buttons: [
-        {
-          label: "Delete",
-          onClick: () => delProduct(id),
-        },
-        {
-          label: "Cancel",
-          // onClick: () => alert('Click No')
-        },
-      ],
-    });
-  };
-
   //   Begin Pagination
   const [currentItems, setCurrentItems] = useState([]);
   const [pageCount, setPageCount] = useState(0);
@@ -86,7 +63,7 @@ const ProductList = ({ products, isLoading }) => {
       <div className="table">
         <div className="--flex-between --flex-dir-column">
           <span>
-            <h3>Inventory Items</h3>
+            <h3>Out of Stack Items</h3>
           </span>
           <span>
             <Search
@@ -100,7 +77,7 @@ const ProductList = ({ products, isLoading }) => {
 
         <div className="table">
           {!isLoading && products.length === 0 ? (
-            <p>-- No product found, please add a product...</p>
+            <p>-- No Out Stack Products found...</p>
           ) : (
             <table>
               <thead>
@@ -159,17 +136,6 @@ const ProductList = ({ products, isLoading }) => {
                           <Link to={`/edit-product/${_id}`}>
                             <FaEdit size={20} color={"green"} />
                           </Link>
-                        </span>
-
-                        <span title="delete">
-                          <FaTrashAlt
-                            size={20}
-                            color={"red"}
-                            onClick={() => confirmDelete(_id)}
-                          />
-                        </span>
-                        <span title="sale">
-                          <Link to={`/sale-product/${_id}`}>{productIcon}</Link>
                         </span>
                       </td>
                     </tr>

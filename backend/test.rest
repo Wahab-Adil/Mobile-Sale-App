@@ -1,9 +1,9 @@
 
-GET  http://localhost:5000/api/report/avlstack/purchase
+POST  http://localhost:5000/api/report/max/sale
 Content-Type: application/json
 
 {
 "fromDate":"2021-2-20",
  "toDate":"2024-12-28",
- "limit":3
+ "limit":4
 }

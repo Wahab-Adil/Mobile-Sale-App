@@ -156,17 +156,6 @@ const ProductList = ({ products, isLoading, report }) => {
                             <AiOutlineEye size={25} color={"purple"} />
                           </Link>
                         </span>
-
-                        <span title="delete">
-                          <FaTrashAlt
-                            size={20}
-                            color={"red"}
-                            onClick={() => confirmDelete(_id)}
-                          />
-                        </span>
-                        <span title="sale">
-                          <Link to={`/sale-product/${_id}`}>{productIcon}</Link>
-                        </span>
                       </td>
                     </tr>
                   );

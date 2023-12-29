@@ -231,7 +231,7 @@ const ProductList = ({ products, isLoading }) => {
                             <FcCamera size={25} color={"purple"} />
                           </Link>
                         </span>
-                        <span title="add">
+                        <span title="Revert">
                           <FcReuse
                             size={20}
                             color={"green"}

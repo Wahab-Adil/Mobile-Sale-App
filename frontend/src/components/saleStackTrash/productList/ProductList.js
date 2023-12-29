@@ -6,6 +6,7 @@ import { BsCart2 } from "react-icons/bs";
 import { AiOutlineEye } from "react-icons/ai";
 import Search from "../../search/Search";
 import { useDispatch, useSelector } from "react-redux";
+import { FcReuse, FcCamera, FcFullTrash } from "react-icons/fc";
 import {
   FILTER_PRODUCTS,
   selectFilteredPoducts,
@@ -220,11 +221,11 @@ const ProductList = ({ products, isLoading }) => {
                       <td style={{ textAlign: "center" }} className="icons">
                         <span title="view">
                           <Link to={`/saletrash-item/${_id}`}>
-                            <AiOutlineEye size={25} color={"purple"} />
+                            <FcCamera size={25} color={"purple"} />
                           </Link>
                         </span>
-                        <span title="edit">
-                          <FaEdit
+                        <span title="Revert">
+                          <FcReuse
                             size={20}
                             color={"green"}
                             onClick={() => RevertTrashItem(_id)}
@@ -232,7 +233,7 @@ const ProductList = ({ products, isLoading }) => {
                         </span>
 
                         <span title="delete">
-                          <FaTrashAlt
+                          <FcFullTrash
                             size={20}
                             color={"red"}
                             onClick={() => confirmDelete(_id)}

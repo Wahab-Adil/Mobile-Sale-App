@@ -39,13 +39,16 @@ const MaxSold = () => {
       await dispatch(maximumSoldProductsReport(data));
     }
   };
-  console.log("New", maxSoldProduct);
+
   return (
     <div>
-      <div className="add-product">
+      <div
+        className="add-product"
+        style={{ minwidth: "100%", display: "flex", justifyContent: "center" }}
+      >
         <Card cardClass={"card"}>
           <form onSubmit={getReportAvalStack} encType="multipart/form-data">
-            <label>From Date:</label>
+            <label style={{ fontWeight: "bold" }}>From Date:</label>
             <input
               style={{ minWidth: "100%", fontWeight: "bold", fontSize: "3rem" }}
               type="date"
@@ -55,7 +58,7 @@ const MaxSold = () => {
               onChange={handleInputChange}
             />
 
-            <label>To Date:</label>
+            <label style={{ fontWeight: "bold" }}>To Date:</label>
             <input
               style={{ minWidth: "100%", fontWeight: "bold", fontSize: "3rem" }}
               type="date"
@@ -64,9 +67,11 @@ const MaxSold = () => {
               value={report?.toDate}
               onChange={handleInputChange}
             />
-            <label>Limit:</label>
+            <label style={{ fontWeight: "bold", marginTop: "10px" }}>
+              Limit:
+            </label>
             <input
-              style={{ minWidth: "100%", fontWeight: "bold", fontSize: "3rem" }}
+              style={{ minWidth: "100%", fontWeight: "bold", fontSize: "2rem" }}
               type="number"
               placeholder="Limit Count Of of Products To Show"
               name="limit"
@@ -74,8 +79,12 @@ const MaxSold = () => {
               onChange={handleInputChange}
             />
             <div className="--my">
-              <button type="submit" className="--btn --btn-primary">
-                Save Product
+              <button
+                style={{ margin: "auto", width: "100%", fontWeight: "bold" }}
+                type="submit"
+                className="--btn --btn-primary"
+              >
+                Find
               </button>
             </div>
           </form>

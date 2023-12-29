@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SpinnerImg } from "../../../loader/Loader";
 import "./productList.scss";
-import { FaEdit, FaTrashAlt, FaStore } from "react-icons/fa";
-import { BsCart2 } from "react-icons/bs";
-import { AiOutlineEye } from "react-icons/ai";
+
 import Search from "../../../search/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -11,16 +9,7 @@ import {
   selectFilteredPoducts,
 } from "../../../../redux/features/product/filterSlice";
 import ReactPaginate from "react-paginate";
-import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import {
-  getSale,
-  deleteSale,
-  AllSales,
-} from "../../../../redux/features/sale/saleSlice";
-import { Link } from "react-router-dom";
-
-const productIcon = <BsCart2 size={30} color="blue" />;
 
 const ProductList = ({ products, isLoading }) => {
   const [search, setSearch] = useState("");
@@ -34,27 +23,6 @@ const ProductList = ({ products, isLoading }) => {
       return shortenedText;
     }
     return text;
-  };
-
-  const delSale = async (id) => {
-    await dispatch(deleteSale(id));
-    await dispatch(AllSales());
-  };
-
-  const confirmDelete = (id) => {
-    confirmAlert({
-      title: "Delete Product",
-      message: "Are you sure you want to delete this product.",
-      buttons: [
-        {
-          label: "Delete",
-          onClick: () => delSale(id),
-        },
-        {
-          label: "Cancel",
-        },
-      ],
-    });
   };
 
   //   Begin Pagination
@@ -86,7 +54,7 @@ const ProductList = ({ products, isLoading }) => {
       <div className="table">
         <div className="--flex-between --flex-dir-column">
           <span>
-            <h3>Sale Items List</h3>
+            <h3>Maximum Sold Products List</h3>
           </span>
           <span>
             <Search
@@ -101,7 +69,8 @@ const ProductList = ({ products, isLoading }) => {
         <div className="table">
           {!isLoading && products.length === 0 ? (
             <p>
-              -- No Sale found, Mention Date And Range Of Product To Show...
+              -- No Maximum Sold Product Exist , Mention Date And Range Of
+              Product To Show...
             </p>
           ) : (
             <table>
@@ -110,11 +79,12 @@ const ProductList = ({ products, isLoading }) => {
                   <th>s/n</th>
                   <th>Name</th>
                   <th>Category</th>
+                  <th>type</th>
                   <th>Purchase</th>
                   <th>Sale</th>
-                  <th>Quantity</th>
-                  <th>Sale Price Total</th>
-                  <th>Action</th>
+                  <th>Total Sold Quantity</th>
+                  <th>Avaliable Quantity</th>
+                  <th>color</th>
                 </tr>
               </thead>
 
@@ -125,48 +95,30 @@ const ProductList = ({ products, isLoading }) => {
                     name,
                     category,
                     purchasePrice,
-                    unitPrice,
-                    quantity,
+                    salePrice,
+                    purchasedQuantity,
+                    avalQuantity,
+                    color,
+                    type,
                   } = product;
                   return (
                     <tr key={_id}>
                       <td>{index + 1}</td>
                       <td>{shortenText(name, 16)}</td>
                       <td>{category}</td>
+                      <td>{type}</td>
                       <td>
                         &#1547;
                         {purchasePrice}
                       </td>
                       <td>
                         &#1547;
-                        {unitPrice}
+                        {salePrice}
                       </td>
-                      <td>{quantity}</td>
+                      <td>{purchasedQuantity}</td>
 
-                      <td>
-                        &#1547;
-                        {unitPrice * quantity}
-                      </td>
-                      <td style={{ textAlign: "center" }} className="icons">
-                        <span title="view">
-                          <Link to={`/sale-detail/${_id}`}>
-                            <AiOutlineEye size={25} color={"purple"} />
-                          </Link>
-                        </span>
-                        <span title="edit">
-                          <Link to={`/edit-sale/${_id}`}>
-                            <FaEdit size={20} color={"green"} />
-                          </Link>
-                        </span>
-
-                        <span title="delete">
-                          <FaTrashAlt
-                            size={20}
-                            color={"red"}
-                            onClick={() => confirmDelete(_id)}
-                          />
-                        </span>
-                      </td>
+                      <td>{avalQuantity}</td>
+                      <td>{color}</td>
                     </tr>
                   );
                 })}

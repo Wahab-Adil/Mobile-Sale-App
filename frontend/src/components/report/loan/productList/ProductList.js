@@ -88,11 +88,7 @@ const ProductList = ({ products, isLoading }) => {
           <span>
             <h3>Loan List</h3>
           </span>
-          <span title="Add">
-            <Link to={`/add-loan`}>
-              <FcAddDatabase size={40} color={"green"} />
-            </Link>
-          </span>
+
           <span>
             <Search
               value={search}
@@ -145,14 +141,6 @@ const ProductList = ({ products, isLoading }) => {
                           <Link to={`/edit-loan/${_id}`}>
                             <FaEdit size={20} color={"green"} />
                           </Link>
-                        </span>
-
-                        <span title="delete">
-                          <FaTrashAlt
-                            size={20}
-                            color={"red"}
-                            onClick={() => confirmDelete(_id)}
-                          />
                         </span>
                       </td>
                     </tr>
