@@ -11,6 +11,7 @@ const initialState = {
   maxSoldProduct: [],
   expense: [],
   loan: [],
+  summeryResult: {},
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -160,6 +161,24 @@ export const loanReport = createAsyncThunk(
   }
 );
 
+// Date wise Summery Report
+export const SummeryReport = createAsyncThunk(
+  "report/summery",
+  async (formData, thunkAPI) => {
+    try {
+      return await reportService.SummeryReport(formData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const reportSlice = createSlice({
   name: "report",
   initialState,
@@ -297,6 +316,22 @@ const reportSlice = createSlice({
         state.loan = action.payload;
       })
       .addCase(loanReport.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        toast.error(action.payload);
+      })
+      // get Date wise Summmery Report
+      .addCase(SummeryReport.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(SummeryReport.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.summeryResult = action.payload;
+      })
+      .addCase(SummeryReport.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

@@ -17,13 +17,17 @@ const SaleStackTrash = () => {
 
   useEffect(() => {
     if (isLoggedIn === true) {
+      console.log("Entered");
       dispatch(SaleStackTrashList());
     }
 
     if (isError) {
     }
   }, [isLoggedIn, isError, message, dispatch]);
-
+  // console.log(
+  //   "saleList",
+  //   saletrashList.map((list) => list._id)
+  // );
   return (
     <div>
       <ProductSummary products={saletrashList} />

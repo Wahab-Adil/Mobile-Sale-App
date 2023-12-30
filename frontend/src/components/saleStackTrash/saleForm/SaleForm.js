@@ -63,12 +63,12 @@ const ProductForm = ({
               justifyContent: "flex-end",
             }}
           >
-            <button  className="--btn --btn-primary">
+            <p className="--btn --btn-primary">
               Total Price ={" "}
               {productPrice && productQuantity
                 ? productPrice * productQuantity
                 : 0}
-            </button>
+            </p>
           </div>
         </Card>
       </form>

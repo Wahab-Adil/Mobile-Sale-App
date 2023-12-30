@@ -3,20 +3,19 @@ const saleModel = require("../models/saleModel");
 const productModel = require("../models/productModel");
 const expenseModel = require("../models/expenseModel");
 const loanModel = require("../models/LoanModel");
-const { default: mongoose } = require("mongoose");
 
 // Purchase Report
 const purchaseReport = asyncHandler(async (req, res) => {
   const { fromDate, toDate } = req.body;
   const purchaseDateWise = await productModel.find({
-    updatedAt: {
+    createdAt: {
       $gte: new Date(fromDate),
       $lte: new Date(toDate),
     },
   });
   const totalpurchaseCount = await productModel
     .find({
-      updatedAt: {
+      createdAt: {
         $gte: new Date(fromDate),
         $lte: new Date(toDate),
       },
@@ -25,7 +24,7 @@ const purchaseReport = asyncHandler(async (req, res) => {
   const purcahseStatustics = await productModel.aggregate([
     {
       $match: {
-        updatedAt: {
+        createdAt: {
           $gte: new Date(fromDate),
           $lte: new Date(toDate),
         },
@@ -354,6 +353,120 @@ const loanReport = asyncHandler(async (req, res) => {
 
   res.status(200).json(purchaseReport);
 });
+// summery
+const Summery = asyncHandler(async (req, res) => {
+  const { fromDate, toDate } = req.body;
+
+  // // purchase value
+  const product = await productModel.aggregate([
+    {
+      $match: {
+        createdAt: {
+          $gte: new Date(fromDate),
+          $lte: new Date(toDate),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: "_id",
+        storeQuantity: { $sum: "$quantity" },
+      },
+    },
+
+    {
+      $sort: {
+        quantity: 1,
+      },
+    },
+  ]);
+  // sale value
+  const saleStoreValue = await saleModel.aggregate([
+    {
+      $match: {
+        createdAt: {
+          $gte: new Date(fromDate),
+          $lte: new Date(toDate),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: "_id",
+        storeValue: { $sum: "$totalPrice" },
+        soldQuantity: { $sum: "$quantity" },
+      },
+    },
+
+    {
+      $sort: {
+        quantity: 1,
+      },
+    },
+  ]);
+  // expense value
+  const expensesSummery = await expenseModel.aggregate([
+    {
+      $match: {
+        createdAt: {
+          $gte: new Date(fromDate),
+          $lte: new Date(toDate),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalPaid: {
+          $sum: "$paid",
+        },
+      },
+    },
+  ]);
+  // loan value
+  const LoansSummery = await loanModel.aggregate([
+    {
+      $match: {
+        createdAt: {
+          $gte: new Date(fromDate),
+          $lte: new Date(toDate),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalPaid: {
+          $sum: "$paid",
+        },
+        totalRecived: {
+          $sum: "$recieved",
+        },
+      },
+    },
+  ]);
+
+  const SummeryResult = {
+    productSummery: {
+      storeValue: product[0]?.storeValue,
+      storeQuantity: product[0]?.storeQuantity,
+    },
+    saleSummery: {
+      storeValue: saleStoreValue[0]?.storeValue,
+      soldQuantity: saleStoreValue[0]?.soldQuantity,
+    },
+    expenseSummery: {
+      totalPaid: expensesSummery[0]?.totalPaid,
+    },
+    loanSummery: {
+      totalPaid: LoansSummery[0]?.totalPaid,
+      totalRecived: LoansSummery[0]?.totalRecived,
+    },
+  };
+
+  res.send(SummeryResult);
+});
+
 module.exports = {
   purchaseReport,
   purchaseAvaliableStackReport,
@@ -363,4 +476,5 @@ module.exports = {
   minimumSoldProductsReport,
   expenseReport,
   loanReport,
+  Summery,
 };

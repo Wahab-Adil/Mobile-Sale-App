@@ -38,6 +38,7 @@ const productSchema = mongoose.Schema(
       required: [true, "Please add sale price"],
       trim: true,
     },
+
     description: {
       type: String,
       required: [true, "Please add a description"],

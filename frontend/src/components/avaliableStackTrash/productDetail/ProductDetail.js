@@ -8,6 +8,7 @@ import Card from "../../card/Card";
 import { SpinnerImg } from "../../loader/Loader";
 import "./ProductDetail.scss";
 import DOMPurify from "dompurify";
+import moment from "moment";
 
 const ProductDetail = () => {
   useRedirectLoggedOutUser("/login");
@@ -47,13 +48,9 @@ const ProductDetail = () => {
             <div className="trashItem-details-box">
               <h4>
                 Date:{" "}
-                {trashItem.createdAt.toLocaleString("en-US", {
-                  timeZone: "UTC",
-                  day: "2-digit",
-                  hourCycle: "h23",
-                  year: "numeric",
-                  month: "2-digit",
-                })}
+                {moment(trashItem.createdAt.toLocaleString()).format(
+                  "MMM Do YY"
+                )}
               </h4>
             </div>
             <Card cardClass="group">

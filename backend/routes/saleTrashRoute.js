@@ -9,7 +9,7 @@ const {
   EmptyTrash,
 } = require("../controllers/saleTrashCtr");
 
-router.get("/", protect, getTrashList);
+router.get("/", getTrashList);
 router.get("/:id", protect, getSingleTrashItem);
 router.delete("/:id", protect, deleteTrashItem);
 router.put("/empty", protect, EmptyTrash);

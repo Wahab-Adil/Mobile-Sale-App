@@ -40,7 +40,7 @@ const ProductSummary = ({ products }) => {
   return (
     <div className="product-summary">
       <h3 style={{ textAlign: "center" }} className="--mt">
-        Avaliable Stack Trash Statistics
+        Avaliable Stack Statistics
       </h3>
       <div className="info-summary">
         <InfoBox
@@ -51,7 +51,7 @@ const ProductSummary = ({ products }) => {
         />
         <InfoBox
           icon={earningIcon}
-          title={"Total Store Value"}
+          title={"Store Value"}
           count={`$${formatNumbers(totalStoreValue.toFixed(2))}  `}
           bgColor="card2"
         />

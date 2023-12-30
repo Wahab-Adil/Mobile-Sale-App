@@ -2,7 +2,7 @@ import {
   FcOrganization,
   FcConferenceCall,
   FcEmptyTrash,
-  FcAddDatabase,
+  FcLineChart,
   FcBusinessman,
   FcAssistant,
   FcMoneyTransfer,
@@ -114,6 +114,11 @@ const menu = [
       },
       { icon: <FcDebt />, title: "Loan", path: "/report/loan" },
     ],
+  },
+  {
+    title: "Summery",
+    icon: <FcLineChart />,
+    path: "/report/summery",
   },
   {
     title: "Account",

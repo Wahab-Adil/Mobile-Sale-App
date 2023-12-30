@@ -56,6 +56,8 @@ import MinSold from "./pages/report/minsale/MinSales.js";
 import ExpenseReport from "./pages/report/expense/expense.js";
 // loan
 import LoanReport from "./pages/report/loan/loan.js";
+// summery
+import Summery from "./pages/summery/summery.js";
 
 axios.defaults.withCredentials = true;
 
@@ -79,6 +81,16 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/resetpassword/:resetToken" element={<Reset />} />
+        <Route
+          path="/report/summery"
+          element={
+            <Sidebar>
+              <Layout>
+                <Summery />
+              </Layout>
+            </Sidebar>
+          }
+        />{" "}
         <Route
           path="/report/purchase"
           element={

@@ -1,10 +1,9 @@
 const asyncHandler = require("express-async-handler");
 const Product = require("../models/productModel");
-const { fileSizeFormatter } = require("../utils/fileUpload");
 const saleListModel = require("../models/saleListModel");
 const saleModel = require("../models/saleModel");
 const ProductTrash = require("../models/ProductTrashModel");
-
+const getCurDate = require("../utils/getCurDate");
 // Create Prouct
 const createProduct = asyncHandler(async (req, res) => {
   const {
@@ -17,7 +16,6 @@ const createProduct = asyncHandler(async (req, res) => {
     type,
     purchasePrice,
     salePrice,
-    image,
   } = req.body;
   console.log("backend", req.body);
   // Validation;
@@ -39,7 +37,6 @@ const createProduct = asyncHandler(async (req, res) => {
     throw new Error("Price cant be negitive value");
   }
 
-  console.log("req .file", req.file, image);
   // Create Product
   const product = await Product.create({
     user: req.user.id,
@@ -53,6 +50,7 @@ const createProduct = asyncHandler(async (req, res) => {
     image: req.file,
     color,
     type,
+    createdAt: getCurDate(),
   });
 
   res.status(201).json(product);
@@ -224,6 +222,7 @@ const saleProduct = asyncHandler(async (req, res) => {
       unitPrice,
       totalPrice,
       image: image,
+      createdAt: getCurDate(),
     });
     const foundedSaleList = await saleListModel.findOne({ user: req.user.id });
     if (!foundedSaleList) {
@@ -288,6 +287,7 @@ const saleProduct = asyncHandler(async (req, res) => {
       type,
       description,
       image: image,
+      createdAt: getCurDate(),
     });
     const foundedSaleList = await saleListModel.findOne({ user: req.user.id });
     if (!foundedSaleList) {

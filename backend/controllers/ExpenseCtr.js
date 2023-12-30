@@ -1,15 +1,9 @@
 const asyncHandler = require("express-async-handler");
 const ExpenseModel = require("../models/expenseModel");
-const moment = require("moment");
+const getCurDate = require("../utils/getCurDate");
 // Create Prouct
 const createExpense = asyncHandler(async (req, res) => {
   const { to, narration, paid, description, date } = req.body;
-
-  var d = new Date();
-  var temp = d.toISOString();
-  var subStr = temp.substr(10, temp.length - 1);
-  var curDate = temp.replace(subStr, "T00:00:00.000Z");
-  console.log(curDate);
 
   // Validation;
   if (!to || !narration || !paid || !description || !date) {
@@ -24,7 +18,8 @@ const createExpense = asyncHandler(async (req, res) => {
     narration,
     paid,
     description,
-    date: curDate,
+    date: getCurDate(),
+    createdAt: getCurDate(),
   });
 
   res.status(201).json({ message: "Expense Created Successfully !" });

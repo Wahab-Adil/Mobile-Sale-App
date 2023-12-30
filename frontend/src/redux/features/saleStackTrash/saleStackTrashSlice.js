@@ -97,6 +97,7 @@ const SaleStackTrashSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
+        console.log("payloda", action.payload);
         state.saletrashList = action.payload;
       })
       .addCase(SaleStackTrashList.rejected, (state, action) => {

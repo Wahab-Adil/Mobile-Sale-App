@@ -10,6 +10,7 @@ const {
   minimumSoldProductsReport,
   expenseReport,
   loanReport,
+  Summery,
 } = require("../controllers/reportCtr");
 
 router.post("/purchase", purchaseReport);
@@ -20,5 +21,6 @@ router.post("/max/sale", maximumSoldProductsReport);
 router.post("/min/sale", minimumSoldProductsReport);
 router.post("/expense", expenseReport);
 router.post("/loan", loanReport);
+router.post("/summery", Summery);
 
 module.exports = router;

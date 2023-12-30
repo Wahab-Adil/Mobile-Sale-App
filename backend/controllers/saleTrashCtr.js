@@ -5,10 +5,8 @@ const ProductModel = require("../models/productModel");
 
 // Create Prouct
 const getTrashList = asyncHandler(async (req, res) => {
-  const saleList = await saleListModel
-    .findOne({ user: req.user.id })
-    .sort("-createdAt");
-  res.status(200).json(saleList);
+  const saleList = await saleListModel.find({}).sort("-createdAt");
+  res.status(200).json(saleList[0].saleTrash);
 });
 
 // Get single product

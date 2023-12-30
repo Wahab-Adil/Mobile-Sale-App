@@ -50,6 +50,12 @@ const loanReport = async (FormData) => {
   return response.data;
 };
 
+// Date wise  Report
+const SummeryReport = async (FormData) => {
+  const response = await axios.post(`${API_URL}/summery`, FormData);
+  return response.data;
+};
+
 const ReportServie = {
   DateWisePurchaseReport,
   purchaseAvaliableStackReport,
@@ -59,6 +65,7 @@ const ReportServie = {
   minimumSoldProductsReport,
   expenseReport,
   loanReport,
+  SummeryReport,
 };
 
 export default ReportServie;

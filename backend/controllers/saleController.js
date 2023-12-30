@@ -3,6 +3,7 @@ const saleListModel = require("../models/saleListModel");
 const saleModel = require("../models/saleModel");
 const trashModel = require("../models/ProductTrashModel");
 const Product = require("../models/productModel");
+const getCurDate = require("../utils/getCurDate");
 
 // Create Prouct
 const getSaleList = asyncHandler(async (req, res) => {

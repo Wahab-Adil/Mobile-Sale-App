@@ -8,6 +8,7 @@ import Card from "../../card/Card";
 import { SpinnerImg } from "../../loader/Loader";
 import "./ProductDetail.scss";
 import DOMPurify from "dompurify";
+import moment from "moment";
 
 const ProductDetail = () => {
   useRedirectLoggedOutUser("/login");
@@ -45,16 +46,7 @@ const ProductDetail = () => {
         {product && (
           <div className="detail">
             <div className="product-details-box">
-              <h4>
-                Date:{" "}
-                {product.createdAt.toLocaleString("en-US", {
-                  timeZone: "UTC",
-                  day: "2-digit",
-                  hourCycle: "h23",
-                  year: "numeric",
-                  month: "2-digit",
-                })}
-              </h4>
+              <h4>Date: {moment(product.createdAt).format("MMM Do YY")}</h4>
             </div>
             <Card cardClass="group">
               {product?.image?.path ? (

@@ -10,7 +10,7 @@ import { FcReuse, FcCamera, FcFullTrash } from "react-icons/fc";
 import {
   FILTER_PRODUCTS,
   selectFilteredPoducts,
-} from "../../../redux/features/saleStackTrash/filterSlice";
+} from "../../../redux/features/product/filterSlice";
 import ReactPaginate from "react-paginate";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -27,6 +27,7 @@ import { toast } from "react-toastify";
 const productIcon = <BsCart2 size={30} color="blue" />;
 
 const ProductList = ({ products, isLoading }) => {
+  console.log("Pleas", products);
   const [search, setSearch] = useState("");
   const filteredProducts = useSelector(selectFilteredPoducts);
   const TrashItem = useSelector((state) => state.saleTrash.saletrashItem);

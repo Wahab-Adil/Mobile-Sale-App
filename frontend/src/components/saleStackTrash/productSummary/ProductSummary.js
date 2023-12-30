@@ -26,6 +26,7 @@ export const formatNumbers = (x) => {
 };
 
 const ProductSummary = ({ products }) => {
+  console.log("new", products);
   const dispatch = useDispatch();
   const totalStoreValue = useSelector(selectTotalStoreValue);
   const outOfStock = useSelector(selectOutOfStock);
@@ -44,7 +45,7 @@ const ProductSummary = ({ products }) => {
         <InfoBox
           icon={productIcon}
           title={"Total Products"}
-          count={products.length}
+          count={products?.length}
           bgColor="card1"
         />
         <InfoBox
@@ -62,7 +63,7 @@ const ProductSummary = ({ products }) => {
         <InfoBox
           icon={categoryIcon}
           title={"All Categories"}
-          count={category.length}
+          count={category?.length}
           bgColor="card4"
         />
       </div>

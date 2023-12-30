@@ -15,7 +15,10 @@ const ProductForm = ({
   productQuantity,
 }) => {
   return (
-    <div className="add-product">
+    <div
+      className="add-product"
+      style={{ display: "flex", justifyContent: "center" }}
+    >
       <form onSubmit={editSaleFun}>
         <Card cardClass={"card"}>
           <div
@@ -26,7 +29,7 @@ const ProductForm = ({
             }}
           >
             <button type="submit" className="--btn --btn-primary">
-              Save Product
+              Edit Sale
             </button>
           </div>
           <div
@@ -63,12 +66,12 @@ const ProductForm = ({
               justifyContent: "flex-end",
             }}
           >
-            <button className="--btn --btn-primary">
+            <p className="--btn --btn-primary">
               Total Price ={" "}
               {productPrice && productQuantity
                 ? productPrice * productQuantity
                 : 0}
-            </button>
+            </p>
           </div>
         </Card>
       </form>
@@ -171,7 +174,12 @@ const ProductForm = ({
         </form>
         {imagePreview != null ? (
           <div className="image-preview">
-            <img src={imagePreview} alt="product" />
+            <img
+              style={{ height: "100%" }}
+              width={"100%"}
+              src={imagePreview}
+              alt="product"
+            />
           </div>
         ) : (
           <p>No image set for this poduct.</p>

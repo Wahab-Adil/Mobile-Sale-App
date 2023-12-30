@@ -7,7 +7,7 @@ const API_URL = `${BACKEND_URL}/api/saletrash`;
 // Get all Trash List of sale stack
 const getTrashList = async () => {
   const response = await axios.get(`${API_URL}/`);
-  return response.data.saleTrash;
+  return response.data;
 };
 
 // Get a sale Stack Single Trash

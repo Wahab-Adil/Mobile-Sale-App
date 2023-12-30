@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const LoanModel = require("../models/LoanModel");
+const getCurDate = require("../utils/getCurDate");
 // Create Prouct
 const createLoan = asyncHandler(async (req, res) => {
   const { to, narration, paid, recieved, description, date } = req.body;
@@ -19,6 +20,7 @@ const createLoan = asyncHandler(async (req, res) => {
     recieved,
     description,
     date,
+    createdAt: getCurDate(),
   });
 
   res.status(201).json("Successfull !");
