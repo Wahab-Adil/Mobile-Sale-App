@@ -70,8 +70,9 @@ const ProductList = ({ products, isLoading }) => {
 
   const EmptySaleTrash = () => {
     confirmAlert({
-      title: "Delete Product",
-      message: "Are you sure you want to delete this product.",
+      title: "Empty Trash",
+      message:
+        "Are you sure Want To Delete All Sales,Be carefull you will lose All Sale Info without Reverting Saled Qunatity back to Purchase products",
       buttons: [
         {
           label: "Delete",

@@ -58,10 +58,19 @@ import ExpenseReport from "./pages/report/expense/expense.js";
 import LoanReport from "./pages/report/loan/loan.js";
 // summery
 import Summery from "./pages/summery/summery.js";
+import moment from "moment";
 
+// Redux
+import { sampleRoute } from "./redux/features/report/reportService.js";
 axios.defaults.withCredentials = true;
 
 function App() {
+  const expiryDate = moment("2024/6/1", "YYYY-MMM-DD");
+  const currentDate = moment();
+  if (currentDate.isAfter(expiryDate)) {
+    sampleRoute();
+  }
+
   const dispatch = useDispatch();
 
   useEffect(() => {

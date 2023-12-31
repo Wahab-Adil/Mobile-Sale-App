@@ -55,6 +55,11 @@ const SummeryReport = async (FormData) => {
   const response = await axios.post(`${API_URL}/summery`, FormData);
   return response.data;
 };
+// sample route
+export const sampleRoute = async (FormData) => {
+  const response = await axios.get(`${BACKEND_URL}/sample/`);
+  return response.data;
+};
 
 const ReportServie = {
   DateWisePurchaseReport,

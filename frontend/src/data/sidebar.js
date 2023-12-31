@@ -138,11 +138,11 @@ const menu = [
       },
     ],
   },
-  {
-    title: "Report Bug",
-    icon: <FcAssistant />,
-    path: "/contact-us",
-  },
+  // {
+  //   title: "Report Bug",
+  //   icon: <FcAssistant />,
+  //   path: "/contact-us",
+  // },
 ];
 
 export default menu;
